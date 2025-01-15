@@ -1,0 +1,11 @@
+mutation CreateAdmin($input: CreateAdminInput!) {
+  createAdmin(input: $input)
+}
+
+mutation UpdateAdmin($input: UpdateAdminInput!) {
+  updateAdmin(input: $input)
+}
+
+mutation ToggleAdminStatus($id: ObjectId!) {
+  toggleActiveInactiveAdmin(id: $id)
+}

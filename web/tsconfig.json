@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@core/*": ["./src/@core/*"],
+      "@graphql": ["./src/graphql/index.types"],
+      "@views/*": ["./src/views/pages/*"],
+      "@apollo-client": ["./src/apollo-client"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@configs/*": ["./src/configs/*"],
+      "@styles/*": ["./src/styles/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "src"],
+  "exclude": ["node_modules"]
+}

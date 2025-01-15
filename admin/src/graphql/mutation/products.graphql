@@ -1,0 +1,23 @@
+mutation CreateProduct($input: CreateProductInput!) {
+  createProduct(input: $input)
+}
+
+mutation UpdateProduct($input: UpdateProductInput!) {
+  updateProduct(input: $input)
+}
+
+mutation RemoveProduct($id: ObjectId!) {
+  removeProduct(id: $id)
+}
+
+mutation ToggleProductStatus($id: ObjectId!) {
+  toggleProductStatus(id: $id)
+}
+
+mutation CreateAmenities($input: CreateAmenitiesInput!) {
+  createAmenities(input: $input)
+}
+
+mutation UpdateAmenities($input: UpdateAmenitiesInput!) {
+  updateAmenities(input: $input)
+}

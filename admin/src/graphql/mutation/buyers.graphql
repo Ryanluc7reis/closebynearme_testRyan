@@ -1,0 +1,13 @@
+mutation {
+  deleteBuyer(id: $id) {
+    message
+    success
+  }
+}
+
+mutation createBuyer($createBuyerInput: CreateBuyerInput!) {
+  createBuyer(createBuyerInput: $createBuyerInput) {
+    message
+    success
+  }
+}

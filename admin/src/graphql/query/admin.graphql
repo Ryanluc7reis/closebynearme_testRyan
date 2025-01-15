@@ -1,0 +1,23 @@
+query ListAdmin($search: SearchAdminInput!) {
+  listAdmin(search: $search) {
+    docs {
+      _id
+      createdAt
+      email
+      fullName
+      permissions
+      profile
+      status
+      avatar
+      role
+    }
+    page
+    limit
+    totalDocs
+    totalPages
+    nextPage
+    prevPage
+    hasNextPage
+    hasPrevPage
+  }
+}

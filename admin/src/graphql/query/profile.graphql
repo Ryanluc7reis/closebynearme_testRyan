@@ -1,0 +1,12 @@
+query Profile {
+  me {
+    __typename
+    _id
+    email
+    fullName
+    permissions
+    profile
+    avatar
+    role
+  }
+}

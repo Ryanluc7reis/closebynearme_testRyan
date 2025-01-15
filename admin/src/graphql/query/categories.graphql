@@ -1,0 +1,34 @@
+query ListCategoriesPaginated($search: SearchBaseInput!) {
+  listCategoriesPaginated(search: $search) {
+    docs {
+      _id
+      name
+      spaceRequirements
+      supervision
+      safety
+      insurancePlan
+      notification
+      spaceRequirements
+      status
+      createdAt
+    }
+    page
+    prevPage
+    nextPage
+    hasNextPage
+    hasPrevPage
+    limit
+    totalDocs
+    totalPages
+  }
+}
+
+query ListAllCategoriesOptions($search: SearchBaseInput!) {
+  listCategoriesPaginated(search: $search) {
+    docs {
+      _id
+      name
+      slug
+    }
+  }
+}

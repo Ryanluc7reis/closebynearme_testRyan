@@ -1,0 +1,23 @@
+query ListReviewsForCompanyPaginated($search: SearchBaseInput!, $companyId: ObjectId!) {
+  listReviewsForCompany(search: $search, companyId: $companyId) {
+    docs {
+      _id
+      fullName
+      description
+      companyId
+      locationId
+      amount
+      locationName
+      status
+      createdAt
+    }
+    page
+    prevPage
+    nextPage
+    hasNextPage
+    hasPrevPage
+    limit
+    totalDocs
+    totalPages
+  }
+}

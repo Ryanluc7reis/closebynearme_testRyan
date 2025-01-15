@@ -1,0 +1,15 @@
+mutation CreateReview($input: CreateReviewInput!) {
+  createReview(input: $input)
+}
+
+mutation UpdateReview($input: UpdateReviewInput!) {
+  updateReview(input: $input)
+}
+
+mutation RemoveReview($id: ObjectId!) {
+  removeReview(id: $id)
+}
+
+mutation ToggleReviewStatus($id: ObjectId!) {
+  toggleReviewStatus(id: $id)
+}

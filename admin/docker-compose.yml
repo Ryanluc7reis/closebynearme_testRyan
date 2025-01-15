@@ -1,0 +1,17 @@
+name: admin-prod
+
+services:
+  web-app:
+    container_name: admin-prod
+    image: admin:prod
+    build:
+      context: .
+    ports:
+      - 4010:3000
+    command: node server
+    restart: always
+
+networks:
+  default:
+    name: local_develop_deps_api-gateway
+    external: true

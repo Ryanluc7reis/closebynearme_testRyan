@@ -1,0 +1,10 @@
+step-deploy-prod:
+  stage: deploy
+  only:
+    - main
+  script:
+    - docker compose up --build -d
+  after_script:
+    - docker rmi $(docker images -qf 'dangling=true')
+  when: always
+  environment: production

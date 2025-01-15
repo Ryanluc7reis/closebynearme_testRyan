@@ -1,0 +1,15 @@
+mutation CreateCategory($input: CreateCategoryInput!) {
+  createCategory(input: $input)
+}
+
+mutation UpdateCategory($input: UpdateCategoryInput!) {
+  updateCategory(input: $input)
+}
+
+mutation RemoveCategory($id: ObjectId!) {
+  removeCategory(id: $id)
+}
+
+mutation ToggleCategoryStatus($id: ObjectId!) {
+  toggleCategoryStatus(id: $id)
+}

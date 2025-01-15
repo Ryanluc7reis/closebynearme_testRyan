@@ -1,0 +1,66 @@
+query ListCompaniesPaginated($search: SearchCompanyInput!) {
+  listCompaniesPaginated(search: $search) {
+    docs {
+      _id
+      name
+      googleMapsLink
+      categories {
+        name
+        slug
+      }
+      categoriesId
+      websiteUrl
+      slug
+      locationSlug
+      locationName
+      locationId
+      address
+      phoneNumber
+      status
+      merchantListingStatus
+      createdAt
+    }
+    page
+    prevPage
+    nextPage
+    hasNextPage
+    hasPrevPage
+    limit
+    totalDocs
+    totalPages
+  }
+}
+
+query ListAllCompaniesOptions($search: SearchCompanyInput!) {
+  listCompaniesPaginated(search: $search) {
+    docs {
+      _id
+      name
+    }
+  }
+}
+
+query FindOneCompany($id: ObjectId!) {
+  findOneCompany(id: $id) {
+    _id
+    name
+    googleMapsLink
+    categories {
+      name
+      slug
+    }
+    reviewsAmount
+    reviewsRating
+    categoriesId
+    websiteUrl
+    slug
+    locationSlug
+    locationName
+    locationId
+    address
+    phoneNumber
+    status
+    merchantListingStatus
+    createdAt
+  }
+}

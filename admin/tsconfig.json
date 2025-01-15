@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "src",
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "react": [
+        "./node_modules/@types/react"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@core/*": [
+        "./src/@core/*"
+      ],
+      "@graphql": [
+        "./src/graphql/index.types"
+      ],
+      "@views/*": [
+        "./src/views/pages/*"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "declaration.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,17 @@
+services:
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      target: production
+    image: api-gateway:prod
+    ports:
+      - 4050:4000
+    env_file:
+      - .env.production
+    restart: 'on-failure'
+
+networks:
+  default:
+    name: local_develop_deps_api-gateway
+    external: true

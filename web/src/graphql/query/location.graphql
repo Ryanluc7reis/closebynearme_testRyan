@@ -1,0 +1,128 @@
+query FindLocationBySlug($slug: String!, $search: SearchBaseInput!, $categorySlug: String!) {
+  findOneLocationBySlug(slug: $slug, categorySlug: $categorySlug) {
+    location {
+      _id
+      name
+      image
+      slug
+    }
+    category {
+      _id
+      name
+      slug
+    }
+    faqs(search: $search) {
+      docs {
+        _id
+        question
+        answer
+        createdAt
+      }
+    }
+  }
+}
+
+query FindCompaniesInLocationAndCategorySlug($slug: String!, $search: SearchBaseInput!, $categorySlug: String!) {
+  findOneLocationBySlug(slug: $slug, categorySlug: $categorySlug) {
+    location {
+      _id
+      name
+      image
+      slug
+    }
+    category {
+      _id
+      name
+      slug
+    }
+    companies(search: $search) {
+      docs {
+        _id
+        name
+        slug
+        locationName
+        initialLetter
+      }
+      hasPrevPage
+      hasNextPage
+      nextPage
+      prevPage
+      page
+    }
+  }
+}
+
+query FindCompaniesByLocationSlug($slug: String!, $search: SearchBaseInput!, $categorySlug: String!) {
+  findOneLocationBySlug(slug: $slug, categorySlug: $categorySlug) {
+    companies(search: $search) {
+      docs {
+        _id
+        name
+        slug
+        locationName
+        initialLetter
+      }
+      hasPrevPage
+      hasNextPage
+      nextPage
+      prevPage
+      page
+    }
+  }
+}
+
+query FindArticlesByLocationSlug($slug: String!, $search: SearchArticleInput!, $categorySlug: String!) {
+  findOneLocationBySlug(slug: $slug, categorySlug: $categorySlug) {
+    articles(search: $search) {
+      docs {
+        _id
+        title
+        description
+        image
+        type
+        createdAt
+      }
+      hasPrevPage
+      hasNextPage
+      nextPage
+      prevPage
+      page
+    }
+  }
+}
+
+query FindFaqsByLocationSlug($slug: String!, $search: SearchBaseInput!, $categorySlug: String!) {
+  findOneLocationBySlug(slug: $slug, categorySlug: $categorySlug) {
+    faqs(search: $search) {
+      docs {
+        _id
+        question
+        answer
+        createdAt
+      }
+    }
+  }
+}
+
+query FindLocations($search: SearchBaseInput!) {
+  findLocations(search: $search) {
+    docs {
+      _id
+      image
+      name
+      slug
+    }
+  }
+}
+
+query FindCategoriesByLocationBySlug($slug: String!) {
+  findCategoriesByLocationBySlug(slug: $slug) {
+    _id
+    name
+    slug
+    categories {
+      name
+      slug
+    }
+  }
+}

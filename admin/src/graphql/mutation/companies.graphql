@@ -1,0 +1,15 @@
+mutation CreateCompany($input: CreateCompanyInput!) {
+  createCompany(input: $input)
+}
+
+mutation UpdateCompany($input: UpdateCompanyInput!) {
+  updateCompany(input: $input)
+}
+
+mutation RemoveCompany($id: ObjectId!) {
+  removeCompany(id: $id)
+}
+
+mutation ToggleCompanyStatus($id: ObjectId!) {
+  toggleCompanyStatus(id: $id)
+}

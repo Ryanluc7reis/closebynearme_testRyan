@@ -1,0 +1,22 @@
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    accessToken
+    email
+    fullName
+    permissions
+    profile
+    avatar
+  }
+}
+
+mutation RecoverPasswordAdmin($input: RecoverPasswordInput!) {
+  recoverPasswordAdmin(input: $input)
+}
+
+query CheckRecoverSecureIdValid($input: CheckRecoverIdInput!) {
+  checkRecoverSecureIdValid(input: $input)
+}
+
+mutation ChangePasswordAdmin($input: ChangePasswordInput!) {
+  changePasswordAdmin(input: $input)
+}

@@ -1,0 +1,15 @@
+mutation CreateArticle($input: CreateArticleInput!) {
+  createArticle(input: $input)
+}
+
+mutation UpdateArticle($input: UpdateArticleInput!) {
+  updateArticle(input: $input)
+}
+
+mutation RemoveArticle($id: ObjectId!) {
+  removeArticle(id: $id)
+}
+
+mutation ToggleArticleStatus($id: ObjectId!) {
+  toggleArticleStatus(id: $id)
+}

@@ -1,0 +1,16 @@
+fragment AdminProfile on Admin {
+  _id
+  email
+  fullName
+  permissions
+  profile
+}
+
+fragment AdminLogin on AuthResponseAdmin {
+  accessToken
+  email
+  fullName
+  permissions
+  profile
+  avatar
+}

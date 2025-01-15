@@ -1,0 +1,44 @@
+query FindOneCompanyBySlug($slug: String!, $companySlug: String!, $categorySlug: String!, $search: SearchBaseInput!) {
+  findOneLocationBySlug(slug: $slug, categorySlug: $categorySlug) {
+    location {
+      _id
+      name
+      image
+      slug
+      categories {
+        name
+        slug
+      }
+    }
+    category {
+      _id
+      name
+      slug
+    }
+    companies(search: $search) {
+      docs {
+        _id
+        name
+        slug
+      }
+    }
+  }
+  findOneCompanyBySlug(companySlug: $companySlug) {
+    company {
+      _id
+      name
+      initialLetter
+    }
+    products(search: $search, slug: $categorySlug) {
+      docs {
+        _id
+        images
+        price
+        slug
+        name
+        priceType
+        full_price
+      }
+    }
+  }
+}

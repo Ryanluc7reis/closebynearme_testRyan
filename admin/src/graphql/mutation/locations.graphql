@@ -1,0 +1,15 @@
+mutation CreateLocation($input: CreateLocationInput!) {
+  createLocation(input: $input)
+}
+
+mutation UpdateLocation($input: UpdateLocationInput!) {
+  updateLocation(input: $input)
+}
+
+mutation RemoveLocation($id: ObjectId!) {
+  removeLocation(id: $id)
+}
+
+mutation ToggleLocationStatus($id: ObjectId!) {
+  toggleLocationStatus(id: $id)
+}

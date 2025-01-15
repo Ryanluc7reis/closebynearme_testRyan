@@ -1,0 +1,67 @@
+query FindProductDetails($slug: String!) {
+  findOneProductPopulate(slug: $slug) {
+    _id
+    images
+    price
+    slug
+    name
+    description
+    priceType
+    full_price
+    amenities {
+      _id
+      name
+      description
+      icon
+    }
+    companyId {
+      _id
+      name
+      initialLetter
+      slug
+      reviewsAmount
+      reviewsRating
+      locationName
+      locationSlug
+    }
+    locationId {
+      _id
+      name
+      image
+      slug
+      categories {
+        name
+        slug
+      }
+    }
+    categoryId {
+      _id
+      name
+      slug
+      spaceRequirements
+      supervision
+      safety
+      insurancePlan
+      notification
+    }
+    spaceRequirements
+    supervision
+    safety
+    insurancePlan
+    notification
+  }
+}
+
+query ListProductsSameCompany($search: SearchProductInput!, $slug: String!) {
+  listProductsSameCompany(search: $search, slug: $slug) {
+    docs {
+      _id
+      name
+      price
+      full_price
+      priceType
+      images
+      slug
+    }
+  }
+}

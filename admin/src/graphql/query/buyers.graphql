@@ -1,0 +1,22 @@
+query {
+  findBuyers {
+    _id
+    birthday
+    email
+    fullName
+    Additional_Details
+    Areas_Of_Interest
+    Delivery_Method
+    Emotional_State
+    Experience_Level
+    Goals_And_Expectations
+    Personality_Match
+    Preferred_Psychic_Services
+    Scheduling_Preferences
+    Spiritual_Preferences
+    Subscription_Preferences
+    role
+    status
+    createdAt
+  }
+}

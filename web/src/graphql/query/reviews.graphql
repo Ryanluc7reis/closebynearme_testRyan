@@ -1,0 +1,11 @@
+query ListReviewsForCompany($search: SearchBaseInput!, $companyId: ObjectId!) {
+  listReviewsForCompany(search: $search, companyId: $companyId) {
+    docs {
+      _id
+      fullName
+      locationName
+      description
+      amount
+    }
+  }
+}

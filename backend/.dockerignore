@@ -1,0 +1,16 @@
+.azure/
+.git/
+.next/
+.swc/
+.vscode/
+dist/
+scripts/
+node_modules/
+.dockerignore
+docker-compose.yml
+Dockerfile
+notes.md
+npm-debug.log
+README.md
+.env.local
+.env.development

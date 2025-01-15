@@ -1,0 +1,71 @@
+query ListProductsPaginated($search: SearchProductInput!) {
+  listProductsPaginated(search: $search) {
+    docs {
+      _id
+      name
+      slug
+      images
+      price
+      priceType
+      serviceFee
+      minimunDays
+      companyId
+      categoryId
+      locationId
+      status
+      createdAt
+    }
+    page
+    prevPage
+    nextPage
+    hasNextPage
+    hasPrevPage
+    limit
+    totalDocs
+    totalPages
+  }
+}
+
+query FindOneProduct($id: ObjectId!) {
+  findOneProduct(id: $id) {
+    _id
+    name
+    images
+    price
+    amenities
+    description
+    priceType
+    serviceFee
+    full_price
+    minimunDays
+    companyId
+    categoryId
+    locationId
+    spaceRequirements
+    supervision
+    safety
+    insurancePlan
+    notification
+  }
+}
+
+query FindAmenities($ids: [ObjectId!]!) {
+  findAmenities(ids: $ids) {
+    _id
+    name
+    description
+    icon
+  }
+}
+query ListAmenitiesPaginated($search: SearchBaseInput!) {
+  listAmenitiesPaginated(search: $search) {
+    docs {
+      _id
+      name
+      description
+      icon
+    }
+    page
+    totalDocs
+  }
+}

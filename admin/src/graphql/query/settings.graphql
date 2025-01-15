@@ -1,0 +1,8 @@
+query GetSetttings {
+  getSettings {
+    _id
+    serviceFee
+    createdAt
+    updatedAt
+  }
+}

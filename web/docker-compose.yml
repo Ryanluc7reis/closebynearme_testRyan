@@ -1,0 +1,17 @@
+name: web-prod
+
+services:
+  web-app:
+    container_name: web-prod
+    image: web:prod
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    command: node server
+    restart: always
+
+networks:
+  default:
+    name: local_develop_deps_api-gateway
+    external: true

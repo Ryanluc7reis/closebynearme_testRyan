@@ -1,0 +1,15 @@
+mutation CreateFaq($input: CreateFaqInput!) {
+  createFaq(input: $input)
+}
+
+mutation UpdateFaq($input: UpdateFaqInput!) {
+  updateFaq(input: $input)
+}
+
+mutation RemoveFaq($id: ObjectId!) {
+  removeFaq(id: $id)
+}
+
+mutation ToggleFaqStatus($id: ObjectId!) {
+  toggleFaqStatus(id: $id)
+}

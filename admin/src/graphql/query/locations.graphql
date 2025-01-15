@@ -1,0 +1,35 @@
+query ListLocationsPaginated($search: SearchBaseInput!) {
+  listLocationsPaginated(search: $search) {
+    docs {
+      _id
+      name
+      slug
+      image
+      status
+      categoriesId
+      categories {
+        name
+        slug
+      }
+      createdAt
+    }
+    page
+    prevPage
+    nextPage
+    hasNextPage
+    hasPrevPage
+    limit
+    totalDocs
+    totalPages
+  }
+}
+
+query ListAllLocationsOptions($search: SearchBaseInput!) {
+  listLocationsPaginated(search: $search) {
+    docs {
+      _id
+      name
+      slug
+    }
+  }
+}

@@ -1,0 +1,35 @@
+query ListArticlesPaginated($search: SearchArticleInput!) {
+  listArticlesPaginated(search: $search) {
+    docs {
+      _id
+      title
+      categoryName
+      locationName
+      type
+      status
+    }
+    page
+    prevPage
+    nextPage
+    hasNextPage
+    hasPrevPage
+    limit
+    totalDocs
+    totalPages
+  }
+}
+
+query FindOneArticle($id: ObjectId!) {
+  findOneArticle(id: $id) {
+    _id
+    title
+    locationId
+    categoryId
+    description
+    image
+    categoryName
+    locationName
+    type
+    status
+  }
+}
