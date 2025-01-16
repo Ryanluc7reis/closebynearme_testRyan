@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Checkbox } from './components/CheckBox.jsx'
-import { dataSteps } from './components/dataQuestions.js'
-import { fieldMapping } from './components/dataQuestions.js'
+import { CheckBoxComponent } from '../../../components/CheckBoxComponent'
+import { dataSteps } from './dataQuestions.js'
+import { fieldMapping } from './dataQuestions.js'
 import axios from 'axios'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native-web'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 
 export const MultiStepFormComponent = () => {
   const [currentStep, setCurrentStep] = useState(0)
@@ -165,13 +165,13 @@ export const MultiStepFormComponent = () => {
           {!option.textArea && !option.hasOverInput && (
             <>
               {currentStep === 1 || currentStep === 9 ? (
-                <Checkbox
+                <CheckBoxComponent
                   option={option.option}
                   isChecked={selectedOptions.includes(option.option)}
                   onSelect={() => handleSelectOverOptions(index)}
                 />
               ) : (
-                <Checkbox
+                <CheckBoxComponent
                   option={option.option}
                   isChecked={selectedOptions.includes(option.option)}
                   onSelect={() => handleSelect(index)}

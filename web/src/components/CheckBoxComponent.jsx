@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native-web'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-export const Checkbox = ({ option, isChecked, onSelect }) => {
+export const CheckBoxComponent = ({ option, isChecked, onSelect }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.checkbox} onPress={onSelect}>
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+
   checkbox: {
     width: 24,
     height: 24,
@@ -27,12 +28,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+
   checked: {
     width: 16,
     height: 16,
     borderRadius: 15,
     backgroundColor: '#0BC9B4'
   },
+
   label: {
     fontSize: 16
   }

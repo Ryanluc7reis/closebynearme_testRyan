@@ -39,5 +39,6 @@ module.exports = {
     config.resolve.extensions = ['.web.js', '.js', '.ts', '.tsx', '.json', '.jsx']
 
     return config
-  }
+  },
+  staticPageGenerationTimeout: 300
 }

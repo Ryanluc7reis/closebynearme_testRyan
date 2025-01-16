@@ -23,9 +23,11 @@
       "@apollo-client": ["./src/apollo-client"],
       "@layouts/*": ["./src/layouts/*"],
       "@configs/*": ["./src/configs/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "react-native": ["react-native-web"]
     }
   },
+  "types": ["react", "react-dom", "react-native", "react-native-web"],
   "include": ["next-env.d.ts", "src"],
   "exclude": ["node_modules"]
 }
