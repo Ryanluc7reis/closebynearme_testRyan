@@ -20,11 +20,11 @@ cd closebynearme_testRyan
 
 # Run the container in the deploy environment (up the mongo and redis from my database)
 cd deploy
-docker-compose up -d
+docker-compose up -d --build
 
 # Build and run the admin environment
 cd ../admin
-timeout 300 yarn install
+yarn install
 yarn build
 
 # Configure systemd for admin
@@ -45,7 +45,7 @@ EOF'
 
 # Build and run the backend environment
 cd ../backend
-timeout 300 yarn install
+yarn install
 yarn build
 
 # Configure systemd for backend
@@ -66,7 +66,7 @@ EOF'
 
 # Build and run the web environment
 cd ../web
-timeout 300 yarn install
+yarn install
 yarn build
 
 # Configure systemd for web
