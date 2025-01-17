@@ -36,7 +36,7 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/admin
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/local/bin/yarn start
 Restart=always
 
 [Install]
@@ -57,7 +57,7 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/backend
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/local/bin/yarn start
 Restart=always
 
 [Install]
@@ -78,7 +78,7 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/web
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/local/bin/yarn start
 Restart=always
 
 [Install]
