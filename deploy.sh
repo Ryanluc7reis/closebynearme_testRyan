@@ -66,8 +66,6 @@ EOF'
 
 # Build and run the web environment
 cd ../web
-yarn install
-yarn build
 
 # Configure systemd for web
 sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
