@@ -1,4 +1,4 @@
-name: local_develop_deps
+version: "3.8"
 
 services:
   redis:
@@ -13,10 +13,11 @@ services:
       - 6379:6379
     volumes:
       - redis_data:/data
+
   mongo:
     image: mongo:latest
-    # mem_limit: 256m
-    # cpus: 0.20
+    #mem_limit: 512m
+    #cpus: 0.50
     restart: always
     volumes:
       - ./data:/data/db
