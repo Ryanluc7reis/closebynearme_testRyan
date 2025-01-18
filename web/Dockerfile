@@ -17,7 +17,6 @@ RUN yarn build
 # Define as variáveis de ambiente
 ENV NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production
 ENV PORT 3000
-ENV NEXT_SHARP_PATH /app/node_modules/sharp
 
 # Expõe a porta 3000
 EXPOSE 3000
