@@ -1,31 +1,29 @@
 #!/bin/bash
 
-# Define the password as an environment variable (not hardcoded in the script)
+# Define a senha como uma variável de ambiente
 export SSHPASS="C3xcc@34df"
 
-# Connect to the server and execute the commands
+# Conecta ao servidor e executa os comandos
 sshpass -e ssh main@64.23.152.172 << 'ENDSSH'
 
-# Fix dpkg if necessary
+# Corrige o dpkg, se necessário
 sudo dpkg --configure -a
 
-# Update and install dependencies
+# Atualiza e instala dependências
 sudo apt-get update
-sudo apt-get install -y nodejs npm docker.io git
+sudo apt-get install -y nodejs npm docker.io git docker-compose
 sudo npm install -g yarn
 
-# Clone the repository
+# Remove o diretório existente (se houver) e clona o repositório
 git clone https://github.com/Ryanluc7reis/closebynearme_testRyan.git
 cd closebynearme_testRyan
 
-# Run the container in the deploy environment (up the mongo and redis from my database)
+# Sobe os containers do MongoDB e Redis
 cd deploy
 docker-compose up -d --build
 
-# Build and run the app environment
+# Configura o systemd para o app
 cd ..
-
-# Configure systemd for all app
 sudo bash -c 'cat > /etc/systemd/system/app.service <<EOF
 [Unit]
 Description=App Service
@@ -41,7 +39,7 @@ Restart=always
 WantedBy=multi-user.target
 EOF'
 
-# Reload and start the services
+# Recarrega e inicia o serviço
 sudo systemctl daemon-reload
 sudo systemctl start app
 
