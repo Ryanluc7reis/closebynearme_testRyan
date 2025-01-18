@@ -22,26 +22,76 @@ cd closebynearme_testRyan
 cd deploy
 docker-compose up -d --build
 
-# Configura o systemd para o app
-cd ..
-sudo bash -c 'cat > /etc/systemd/system/app.service <<EOF
+# Navega para a pasta admin, sobe os containers e cria o serviço
+cd ../admin
+docker-compose up -d --build
+
+# Cria o serviço para monitorar o ambiente admin
+sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
 [Unit]
-Description=App Service
+Description=Admin Service
 After=network.target
 
 [Service]
 User=main
-WorkingDirectory=/home/main/closebynearme_testRyan
-ExecStart=/bin/bash -c "/usr/local/bin/yarn admin-prod && /usr/local/bin/yarn web-prod && /usr/local/bin/yarn backend-prod"
+WorkingDirectory=/home/main/closebynearme_testRyan/admin
+ExecStart=/usr/local/bin/docker-compose up
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 EOF'
 
-# Recarrega e inicia o serviço
+# Navega para a pasta web, sobe os containers e cria o serviço
+cd ../web
+docker-compose up -d --build
+
+# Cria o serviço para monitorar o ambiente web
+sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
+[Unit]
+Description=Web Service
+After=network.target
+
+[Service]
+User=main
+WorkingDirectory=/home/main/closebynearme_testRyan/web
+ExecStart=/usr/local/bin/docker-compose up
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+# Navega para a pasta backend, sobe os containers e cria o serviço
+cd ../backend
+docker-compose up -d --build
+
+# Cria o serviço para monitorar o ambiente backend
+sudo bash -c 'cat > /etc/systemd/system/backend.service <<EOF
+[Unit]
+Description=Backend Service
+After=network.target
+
+[Service]
+User=main
+WorkingDirectory=/home/main/closebynearme_testRyan/backend
+ExecStart=/usr/local/bin/docker-compose up
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+# Recarrega e inicia os serviços
 sudo systemctl daemon-reload
-sudo systemctl start app
+sudo systemctl start admin
+sudo systemctl start web
+sudo systemctl start backend
+
+# Habilita os serviços para iniciar automaticamente na inicialização do sistema
+sudo systemctl enable admin
+sudo systemctl enable web
+sudo systemctl enable backend
 
 ENDSSH
 
