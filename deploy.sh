@@ -12,7 +12,7 @@ sudo dpkg --configure -a
 # Update and install dependencies
 sudo apt-get update
 sudo apt-get install -y nodejs npm docker.io git
-sudo npm install -g yarn
+
 
 # Clone the repository
 git clone https://github.com/Ryanluc7reis/closebynearme_testRyan.git
