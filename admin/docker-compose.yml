@@ -9,5 +9,4 @@ services:
       target: runner
     ports:
       - 4010:3001
-    command: node server
     restart: always
