@@ -45,8 +45,7 @@ EOF'
 
 # Build and run the backend environment
 cd ../backend
-yarn install --frozen-lockfile
-yarn build
+
 
 # Configure systemd for backend
 sudo bash -c 'cat > /etc/systemd/system/backend.service <<EOF
