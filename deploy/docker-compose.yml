@@ -16,8 +16,6 @@ services:
 
   mongo:
     image: mongo:latest
-    #mem_limit: 512m
-    #cpus: 0.50
     restart: always
     volumes:
       - ./data:/data/db

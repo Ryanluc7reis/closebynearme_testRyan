@@ -24,7 +24,7 @@ docker-compose up -d --build
 
 # Build and run the admin environment
 cd ../admin
-yarn install
+yarn install --frozen-lockfile
 yarn build
 
 # Configure systemd for admin
@@ -45,7 +45,7 @@ EOF'
 
 # Build and run the backend environment
 cd ../backend
-yarn install
+yarn install --frozen-lockfile
 yarn build
 
 # Configure systemd for backend
@@ -66,6 +66,8 @@ EOF'
 
 # Build and run the web environment
 cd ../web
+yarn install --frozen-lockfile
+yarn build
 
 # Configure systemd for web
 sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
