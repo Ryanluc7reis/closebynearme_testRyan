@@ -19,8 +19,8 @@ git clone https://github.com/Ryanluc7reis/closebynearme_testRyan.git
 cd closebynearme_testRyan
 
 # Run the container in the deploy environment (up the mongo and redis from my database)
-cd deploy
-docker-compose up -d --build
+# cd deploy
+# docker-compose up -d --build
 
 # Build and run the admin environment
 cd ../admin
