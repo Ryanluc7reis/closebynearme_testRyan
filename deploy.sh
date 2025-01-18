@@ -36,7 +36,7 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/backend
-ExecStart=/usr/local/bin/docker-compose up
+ExecStart=/usr/bin/docker-compose up
 Restart=always
 
 [Install]
@@ -56,7 +56,7 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/web
-ExecStart=/usr/local/bin/docker-compose up
+ExecStart=/usr/bin/docker-compose up
 Restart=always
 
 [Install]
@@ -77,7 +77,7 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/admin
-ExecStart=/usr/local/bin/docker-compose up
+ExecStart=/usr/bin/docker-compose up
 Restart=always
 
 [Install]
