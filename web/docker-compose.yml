@@ -1,4 +1,4 @@
-name: web-prod
+version: '3.8'
 
 services:
   web-app:
@@ -6,12 +6,8 @@ services:
     image: web:prod
     build:
       context: .
+      target: runner
     ports:
       - '3000:3000'
     command: node server
     restart: always
-
-networks:
-  default:
-    name: local_develop_deps_api-gateway
-    external: true

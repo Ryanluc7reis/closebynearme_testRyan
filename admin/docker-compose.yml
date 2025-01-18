@@ -1,4 +1,4 @@
-name: admin-prod
+version: '3.8'
 
 services:
   web-app:
@@ -6,12 +6,8 @@ services:
     image: admin:prod
     build:
       context: .
+      target: runner
     ports:
-      - 4010:3000
+      - 4010:3001
     command: node server
     restart: always
-
-networks:
-  default:
-    name: local_develop_deps_api-gateway
-    external: true

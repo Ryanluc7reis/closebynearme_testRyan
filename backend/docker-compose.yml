@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   api-gateway:
     container_name: api-gateway
@@ -10,8 +11,3 @@ services:
     env_file:
       - .env.production
     restart: 'on-failure'
-
-networks:
-  default:
-    name: local_develop_deps_api-gateway
-    external: true
