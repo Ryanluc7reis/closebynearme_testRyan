@@ -23,10 +23,6 @@ cd deploy
 docker-compose up -d --build
 
 
-# Navega para a pasta web, sobe os containers e cria o serviço
-cd ../web
-docker-compose up -d --build
-
 # Navega para a pasta backend, sobe os containers e cria o serviço
 cd ../backend
 docker-compose up -d --build
@@ -46,6 +42,10 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF'
+
+# Navega para a pasta web, sobe os containers e cria o serviço
+cd ../web
+docker-compose up -d --build
 
 # Cria o serviço para monitorar o ambiente web
 sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
