@@ -1,33 +1,52 @@
 #!/bin/bash
 
-# Define a senha como uma variável de ambiente
+# Define the password as an environment variable (not hardcoded in the script)
 export SSHPASS="C3xcc@34df"
 
-# Conecta ao servidor e executa os comandos
+# Connect to the server and execute the commands
 sshpass -e ssh main@64.23.152.172 << 'ENDSSH'
 
-# Corrige o dpkg, se necessário
+# Fix dpkg if necessary
 sudo dpkg --configure -a
 
-# Atualiza e instala dependências
+# Update and install dependencies
 sudo apt-get update
-sudo apt-get install -y nodejs npm docker.io git docker-compose
+sudo apt-get install -y nodejs npm docker.io git
 sudo npm install -g yarn
 
-# Remove o diretório existente (se houver) e clona o repositório
+# Clone the repository
 git clone https://github.com/Ryanluc7reis/closebynearme_testRyan.git
 cd closebynearme_testRyan
 
-# Sobe os containers do MongoDB e Redis
+# Run the container in the deploy environment (up the mongo and redis from my database)
 cd deploy
 docker-compose up -d --build
 
+# Build and run the app environment
+cd ../admin
+yarn install
+yarn build
 
-# Navega para a pasta backend, sobe os containers e cria o serviço
+# Configure systemd for  admin
+sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
+[Unit]
+Description=Admin Service
+After=network.target
+
+[Service]
+User=main
+WorkingDirectory=/home/main/closebynearme_testRyan
+ExecStart=/usr/local/bin/yarn start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+# Build and run the backend environment
 cd ../backend
-docker-compose up -d --build
 
-# Cria o serviço para monitorar o ambiente backend
+# Configure systemd for backend
 sudo bash -c 'cat > /etc/systemd/system/backend.service <<EOF
 [Unit]
 Description=Backend Service
@@ -36,18 +55,19 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/backend
-ExecStart=/usr/bin/docker-compose up
+ExecStart=/usr/local/bin/yarn start
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 EOF'
 
-# Navega para a pasta web, sobe os containers e cria o serviço
+# Build and run the web environment
 cd ../web
-docker-compose up -d --build
+yarn install
+yarn build
 
-# Cria o serviço para monitorar o ambiente web
+# Configure systemd for web
 sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
 [Unit]
 Description=Web Service
@@ -56,44 +76,21 @@ After=network.target
 [Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/web
-ExecStart=/usr/bin/docker-compose up
+ExecStart=/usr/local/bin/yarn start
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 EOF'
 
-
-# Navega para a pasta admin, sobe os containers e cria o serviço
-cd ../admin
-docker-compose up -d --build
-
-# Cria o serviço para monitorar o ambiente admin
-sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
-[Unit]
-Description=Admin Service
-After=network.target
-
-[Service]
-User=main
-WorkingDirectory=/home/main/closebynearme_testRyan/admin
-ExecStart=/usr/bin/docker-compose up
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF'
-
-# Recarrega e inicia os serviços
+# Reload and start the services
 sudo systemctl daemon-reload
-sudo systemctl start admin
-sudo systemctl start web
-sudo systemctl start backend
-
-# Habilita os serviços para iniciar automaticamente na inicialização do sistema
-sudo systemctl enable admin
-sudo systemctl enable web
-sudo systemctl enable backend
+#sudo systemctl start admin
+#sudo systemctl start backend
+#sudo systemctl start web
+#sudo systemctl enable admin
+#sudo systemctl enable backend
+#sudo systemctl enable web
 
 ENDSSH
 
