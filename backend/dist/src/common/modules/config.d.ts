@@ -1,0 +1,21 @@
+declare const CONFIG: {
+    PORT: string | number;
+    ENV: string;
+    DB_URI: string;
+    DB_NAME: string;
+    FRONTEND_URL: string;
+    ADMIN_FRONTEND_URL: string;
+    JWT_ACCESSTOKEN_SECRET: string;
+    JWT_REFRESHTOKEN_SECRET: string;
+    JWT_ISSUER: string;
+    JWT_AUDIENCE: string;
+    REDIS_URI: string;
+    REDIS_NAME: string;
+    REDIS_PORT: string | number;
+    AWS_BUCKET: string;
+    AWS_ACCESS_KEY_ID: string;
+    AWS_SECRET_ACCESS_KEY: string;
+    AWS_REGION: string;
+    AWS_URL: string;
+};
+export default CONFIG;
