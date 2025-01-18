@@ -35,9 +35,9 @@ COPY --chown=node:node package.json yarn.lock ./
 COPY --chown=node:node --from=development /app/node_modules ./node_modules
 
 COPY --chown=node:node . .
-
+RUN yarn add sharp
 # Build the app (in standalone mode based on next.config.js)
-RUN yarn build
+RUN yarn build --no-cache --progress=plain
 
 # Production image, copy all the files and run next
 FROM base AS runner

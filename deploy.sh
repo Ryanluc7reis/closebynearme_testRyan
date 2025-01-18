@@ -22,29 +22,30 @@ cd closebynearme_testRyan
 cd deploy
 docker-compose up -d --build
 
-# Navega para a pasta admin, sobe os containers e cria o serviço
-cd ../admin
+
+# Navega para a pasta web, sobe os containers e cria o serviço
+cd ../web
 docker-compose up -d --build
 
-# Cria o serviço para monitorar o ambiente admin
-sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
+# Navega para a pasta backend, sobe os containers e cria o serviço
+cd ../backend
+docker-compose up -d --build
+
+# Cria o serviço para monitorar o ambiente backend
+sudo bash -c 'cat > /etc/systemd/system/backend.service <<EOF
 [Unit]
-Description=Admin Service
+Description=Backend Service
 After=network.target
 
 [Service]
 User=main
-WorkingDirectory=/home/main/closebynearme_testRyan/admin
+WorkingDirectory=/home/main/closebynearme_testRyan/backend
 ExecStart=/usr/local/bin/docker-compose up
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 EOF'
-
-# Navega para a pasta web, sobe os containers e cria o serviço
-cd ../web
-docker-compose up -d --build
 
 # Cria o serviço para monitorar o ambiente web
 sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
@@ -62,19 +63,20 @@ Restart=always
 WantedBy=multi-user.target
 EOF'
 
-# Navega para a pasta backend, sobe os containers e cria o serviço
-cd ../backend
+
+# Navega para a pasta admin, sobe os containers e cria o serviço
+cd ../admin
 docker-compose up -d --build
 
-# Cria o serviço para monitorar o ambiente backend
-sudo bash -c 'cat > /etc/systemd/system/backend.service <<EOF
+# Cria o serviço para monitorar o ambiente admin
+sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
 [Unit]
-Description=Backend Service
+Description=Admin Service
 After=network.target
 
 [Service]
 User=main
-WorkingDirectory=/home/main/closebynearme_testRyan/backend
+WorkingDirectory=/home/main/closebynearme_testRyan/admin
 ExecStart=/usr/local/bin/docker-compose up
 Restart=always
 
