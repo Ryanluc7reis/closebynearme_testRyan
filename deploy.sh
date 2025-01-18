@@ -23,7 +23,7 @@ cd closebynearme_testRyan
 # docker-compose up -d --build
 
 # Build and run the admin environment
-cd ../admin
+cd admin
 yarn install --frozen-lockfile
 yarn build
 
