@@ -66,7 +66,7 @@ cd closebynearme_testRyan
 cd web
 yarn install 
 export NODE_OPTIONS="--max-old-space-size=512"
-yarn build --verbose
+NEXT_DEBUG=1 yarn build
 
 # Configure systemd for web
 sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
