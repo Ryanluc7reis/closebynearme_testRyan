@@ -74,7 +74,7 @@ sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
 Description=Web Service
 After=network.target
 
-#[Service]
+[Service]
 User=main
 WorkingDirectory=/home/main/closebynearme_testRyan/web
 ExecStart=/usr/local/bin/yarn start
