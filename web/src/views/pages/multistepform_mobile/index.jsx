@@ -111,21 +111,22 @@ export const MultiStepFormComponent = () => {
     return { isValid: true }
   }
 
-  const handleSubmit = () => {
-    const validation = validateForm()
-
+  const handleSubmit = async () => {
+    const validation = validateForm();
+  
     if (!validation.isValid) {
-      return console.log(`The field "${validation.field}" is empty.`)
+      return console.log(`The field "${validation.field}" is empty.`);
     }
+  
     const updatedFormData = {
       ...formData,
-      fullName: personalData.fullName,
-      email: personalData.email,
-      birthday: personalData.birthday,
+      fullName: personalData.fullName || '',
+      email: personalData.email || '',
+      birthday: personalData.birthday || '',
       role: 'CLIENT',
-      createdAt: new Date().toISOString()
-    }
-    
+      createdAt: new Date().toISOString(),
+    };
+  
     const query = {
       query: `
         mutation createBuyer($createBuyerInput: CreateBuyerInput!) {
@@ -136,23 +137,22 @@ export const MultiStepFormComponent = () => {
         }
       `,
       variables: {
-        createBuyerInput: updatedFormData
-      }
-    }
-
-    api
-      .post( query, {
+        createBuyerInput: updatedFormData,
+      },
+    };
+  
+    try {
+      const response = await api.post('', query, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((response) => {
-        console.log('Answer from API:', response.data.createBuyer)
-      })
-      .catch((error) => {
-        console.error('Error to send data:', error)
-      })
-  }
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      console.log('Answer from API:', response.data.createBuyer);
+    } catch (error) {
+      console.error('Error to send data:', error);
+    }
+  };
 
   const selectedOptions = selections[currentStep] || []
 
