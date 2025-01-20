@@ -1,13 +1,37 @@
 version: '3.8'
 services:
-  api-gateway:
-    container_name: api-gateway
-    build:
-      context: .
-      target: production
-    image: api-gateway:prod
+  redis:
+    container_name: redis
+    image: redis:7.0-alpine
+    mem_limit: 256m
+    cpus: 0.20
+    restart: always
+    networks:
+      - api-gateway
     ports:
-      - 4050:4000
-    env_file:
-      - .env.production
-    restart: 'on-failure'
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+  mongo:
+    image: mongo:latest
+    # mem_limit: 256m
+    # cpus: 0.20
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - api-gateway
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=Gjvuvp2geJj
+    command: --quiet --logpath /dev/null
+
+networks:
+  api-gateway:
+
+volumes:
+  redis_data:
+    driver: local
