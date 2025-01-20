@@ -10,13 +10,14 @@ const CONFIG = {
     process.env.NODE_ENV === 'production'
       ? Base64UnEncript(process.env.DB_URI) || ''
       : process.env.DB_URI ||
-        'mongodb://root:Gjvuvp2geJj@localhost:27017/closebynearmeDB?authSource=admin',
+        'mongodb://closebynearme:qf8jGnWBDJZf@localhost:27017/closebynearmeDB?authSource=admin',
   DB_NAME:
     process.env.NODE_ENV === 'production'
       ? Base64UnEncript(process.env.DB_NAME) || ''
-      : process.env.DB_NAME || 'root',
-  FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:3000',
-  ADMIN_FRONTEND_URL: process.env.ADMIN_FRONTEND_URL || 'http://localhost:3000',
+      : process.env.DB_NAME || 'closebynearme',
+  FRONTEND_URL: process.env.FRONTEND_URL || 'https://closebynearme.com',
+  ADMIN_FRONTEND_URL:
+    process.env.ADMIN_FRONTEND_URL || 'https://admin.closebynearme.com',
   // JWT
   // JWT
   JWT_ACCESSTOKEN_SECRET: process.env.JWT_ACCESSTOKEN_SECRET || 'secret',
