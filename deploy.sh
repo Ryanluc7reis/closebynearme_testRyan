@@ -64,7 +64,7 @@ cd closebynearme_testRyan
 
 # Build and run the web environment
 cd web
-yarn install --production
+yarn install 
 export NODE_OPTIONS="--max-old-space-size=512"
 yarn build --verbose
 
