@@ -6,7 +6,7 @@ export const ListBuyersComponent = () => {
   const [selectedBuyer, setSelectedBuyer] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [buyersData, setBuyersData] = useState([])
-  const URI = procces.env.NEXT_PUBLIC_GRAPHQL_URL
+  const URI = process.env.NEXT_PUBLIC_GRAPHQL_URL
 
   useEffect(() => {
     const getBuyers = async () => {

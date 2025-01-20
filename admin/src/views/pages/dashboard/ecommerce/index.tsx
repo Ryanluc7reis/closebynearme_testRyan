@@ -17,7 +17,6 @@ const DashboardView = () => {
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
-        <h2>Oi</h2>
         {/* <Grid item xs={12} md={12}>
           <EcommerceStatistics />
         </Grid> */}

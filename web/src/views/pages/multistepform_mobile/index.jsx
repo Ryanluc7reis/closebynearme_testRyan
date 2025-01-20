@@ -16,7 +16,7 @@ export const MultiStepFormComponent = () => {
     email: '',
     birthday: ''
   })
-  const URI = procces.env.NEXT_PUBLIC_GRAPHQL_URL
+  const URI = process.env.NEXT_PUBLIC_GRAPHQL_URL
 
   const handleNext = () => {
     if (currentStep < dataSteps.length - 1) {
