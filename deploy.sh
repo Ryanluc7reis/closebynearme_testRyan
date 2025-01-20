@@ -25,7 +25,7 @@ cd closebynearme_testRyan
 # Build and run the app environment
 cd admin
 yarn install
-export NODE_OPTIONS="--max-old-space-size=512"
+export NODE_OPTIONS="--max-old-space-size=4096"
 NEXT_DEBUG=1 yarn build
 
 # Configure systemd for  admin
