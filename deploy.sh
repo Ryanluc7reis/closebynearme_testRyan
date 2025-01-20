@@ -10,42 +10,42 @@ sshpass -e ssh main@64.23.152.172 << 'ENDSSH'
 sudo dpkg --configure -a
 
 # Update and install dependencies
-#sudo apt-get update
-#sudo apt-get install -y nodejs npm docker.io git
+sudo apt-get update
+sudo apt-get install -y nodejs npm docker.io git
 
 
 # Clone the repository
-#git clone https://github.com/Ryanluc7reis/closebynearme_testRyan.git
+git clone https://github.com/Ryanluc7reis/closebynearme_testRyan.git
 cd closebynearme_testRyan
 
 # Run the container in the deploy environment (up the mongo and redis from my database)
-#cd deploy
-#docker-compose up -d --build
+cd deploy
+docker-compose up -d --build
 
 # Build and run the app environment
-#cd admin
-#yarn install
-#export NODE_OPTIONS="--max-old-space-size=768"
-#NEXT_DEBUG=1 yarn build
+cd ../admin
+yarn install
+export NODE_OPTIONS="--max-old-space-size=768"
+NEXT_DEBUG=1 yarn build
 
 # Configure systemd for  admin
-#sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
-#[Unit]
-#Description=Admin Service
-#After=network.target
+sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
+[Unit]
+Description=Admin Service
+After=network.target
 
-#[Service]
-#User=main
-#WorkingDirectory=/home/main/closebynearme_testRyan/admin
-#ExecStart=/usr/local/bin/yarn start
-#Restart=always
+[Service]
+User=main
+WorkingDirectory=/home/main/closebynearme_testRyan/admin
+ExecStart=/usr/local/bin/yarn start
+Restart=always
 
-#[Install]
-#WantedBy=multi-user.target
-#EOF'
+[Install]
+WantedBy=multi-user.target
+EOF'
 
 # Build and run the backend environment
-cd backend
+cd ../backend
 yarn install
 export NODE_OPTIONS="--max-old-space-size=768"
 NEXT_DEBUG=1 yarn build
@@ -67,35 +67,35 @@ WantedBy=multi-user.target
 EOF'
 
 # Build and run the web environment
-#cd web
-#yarn install 
-#export NODE_OPTIONS="--max-old-space-size=512"
-#NEXT_DEBUG=1 yarn build
+cd ../web
+yarn install 
+export NODE_OPTIONS="--max-old-space-size=512"
+NEXT_DEBUG=1 yarn build
 
 # Configure systemd for web
-#sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
-#[Unit]
-#Description=Web Service
-#After=network.target
+sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
+[Unit]
+Description=Web Service
+After=network.target
 
-#[Service]
-#User=main
-#WorkingDirectory=/home/main/closebynearme_testRyan/web
-#ExecStart=/usr/local/bin/yarn start
-#Restart=always
+[Service]
+User=main
+WorkingDirectory=/home/main/closebynearme_testRyan/web
+ExecStart=/usr/local/bin/yarn start
+Restart=always
 
-#[Install]
-#WantedBy=multi-user.target
-#EOF'
+[Install]
+WantedBy=multi-user.target
+EOF'
 
 # Reload and start the services
 sudo systemctl daemon-reload
-#sudo systemctl start admin
+sudo systemctl start admin
 sudo systemctl start backend
-#sudo systemctl start web
-#sudo systemctl enable admin
+sudo systemctl start web
+sudo systemctl enable admin
 sudo systemctl enable backend
-#sudo systemctl enable web
+sudo systemctl enable web
 
 ENDSSH
 
