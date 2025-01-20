@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { CheckBoxComponent } from '../../../components/CheckBoxComponent'
 import { dataSteps } from './dataQuestions.js'
 import { fieldMapping } from './dataQuestions.js'
-import axios from 'axios'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import api from '../../../graphql/api'
 
 export const MultiStepFormComponent = () => {
   const [currentStep, setCurrentStep] = useState(0)
@@ -140,8 +140,8 @@ export const MultiStepFormComponent = () => {
       }
     }
 
-    axios
-      .post('http://localhost:4000/graphql', query, {
+    api
+      .post( query, {
         headers: {
           'Content-Type': 'application/json'
         }
