@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import { CheckBoxComponent } from '../../../components/CheckBoxComponent'
 import { dataSteps } from './dataQuestions.js'
 import { fieldMapping } from './dataQuestions.js'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import api from '../../../graphql/api'
+
 
 export const MultiStepFormComponent = () => {
   const [currentStep, setCurrentStep] = useState(0)
@@ -15,6 +16,7 @@ export const MultiStepFormComponent = () => {
     email: '',
     birthday: ''
   })
+  const URI = procces.env.NEXT_PUBLIC_GRAPHQL_URL
 
   const handleNext = () => {
     if (currentStep < dataSteps.length - 1) {
@@ -142,7 +144,7 @@ export const MultiStepFormComponent = () => {
     };
   
     try {
-      const response = await api.post('', query, {
+      const response = await axios.post(`${URI}`, query, {
         headers: {
           'Content-Type': 'application/json',
         },

@@ -6,11 +6,12 @@ export const ListBuyersComponent = () => {
   const [selectedBuyer, setSelectedBuyer] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [buyersData, setBuyersData] = useState([])
+  const URI = procces.env.NEXT_PUBLIC_GRAPHQL_URL
 
   useEffect(() => {
     const getBuyers = async () => {
       try {
-        const response = await axios.post('http://localhost:4000/graphql', {
+        const response = await axios.post(`${URI}`, {
           query: `
             query {
               findBuyers {
