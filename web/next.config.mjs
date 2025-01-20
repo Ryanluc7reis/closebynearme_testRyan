@@ -1,12 +1,10 @@
-import withTM from 'next-transpile-modules';
+import withTM from 'next-transpile-modules'
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withTM([
-  'react-native',
-  'react-native-web'
-])({
+const nextConfig = withTM(['react-native', 'react-native-web'])({
   reactStrictMode: true,
   output: 'standalone',
+
   // experimental: {
   //   turbo: {
   //     optimizePackageImports: ['package-name']
@@ -25,13 +23,13 @@ const nextConfig = withTM([
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       'react-native$': 'react-native-web'
-    };
+    }
 
-    config.resolve.extensions = ['.web.js', '.js', '.ts', '.tsx', '.json', '.jsx'];
+    config.resolve.extensions = ['.web.js', '.js', '.ts', '.tsx', '.json', '.jsx']
 
-    return config;
+    return config
   },
   staticPageGenerationTimeout: 300
-});
+})
 
-export default nextConfig;
+export default nextConfig
