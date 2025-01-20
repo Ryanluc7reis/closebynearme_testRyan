@@ -26,7 +26,7 @@ const CONFIG = {
   JWT_AUDIENCE: process.env.JWT_AUDIENCE || 'public',
 
   // Redis
-  REDIS_URI: process.env.REDIS_URI || '172.18.0.3',
+  REDIS_URI: process.env.REDIS_URI || 'redis',
   REDIS_NAME:
     process.env.NODE_ENV === 'production'
       ? Base64UnEncript(process.env.REDIS_NAME) || 'ha-redis'
