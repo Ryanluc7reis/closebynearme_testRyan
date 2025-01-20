@@ -23,25 +23,26 @@ cd closebynearme_testRyan
 #docker-compose up -d --build
 
 # Build and run the app environment
-#cd ../admin
-#yarn install
-#yarn build
+cd admin
+yarn install
+export NODE_OPTIONS="--max-old-space-size=512"
+NEXT_DEBUG=1 yarn build
 
 # Configure systemd for  admin
-#sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
-#[Unit]
-#Description=Admin Service
-#After=network.target
+sudo bash -c 'cat > /etc/systemd/system/admin.service <<EOF
+[Unit]
+Description=Admin Service
+After=network.target
 
-#[Service]
-#User=main
-#WorkingDirectory=/home/main/closebynearme_testRyan
-#ExecStart=/usr/local/bin/yarn start
-#Restart=always
+[Service]
+User=main
+WorkingDirectory=/home/main/closebynearme_testRyan
+ExecStart=/usr/local/bin/yarn start
+Restart=always
 
-#[Install]
-#WantedBy=multi-user.target
-#EOF'
+[Install]
+WantedBy=multi-user.target
+EOF'
 
 # Build and run the backend environment
 #cd ../backend
@@ -63,35 +64,35 @@ cd closebynearme_testRyan
 #EOF'
 
 # Build and run the web environment
-cd web
-yarn install 
-export NODE_OPTIONS="--max-old-space-size=512"
-NEXT_DEBUG=1 yarn build
+#cd web
+#yarn install 
+#export NODE_OPTIONS="--max-old-space-size=512"
+#NEXT_DEBUG=1 yarn build
 
 # Configure systemd for web
-sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
-[Unit]
-Description=Web Service
-After=network.target
+#sudo bash -c 'cat > /etc/systemd/system/web.service <<EOF
+#[Unit]
+#Description=Web Service
+#After=network.target
 
-[Service]
-User=main
-WorkingDirectory=/home/main/closebynearme_testRyan/web
-ExecStart=/usr/local/bin/yarn start
-Restart=always
+#[Service]
+#User=main
+#WorkingDirectory=/home/main/closebynearme_testRyan/web
+#ExecStart=/usr/local/bin/yarn start
+#Restart=always
 
-[Install]
-WantedBy=multi-user.target
-EOF'
+#[Install]
+#WantedBy=multi-user.target
+#EOF'
 
 # Reload and start the services
 sudo systemctl daemon-reload
-#sudo systemctl start admin
+sudo systemctl start admin
 #sudo systemctl start backend
-sudo systemctl start web
-#sudo systemctl enable admin
+#sudo systemctl start web
+sudo systemctl enable admin
 #sudo systemctl enable backend
-sudo systemctl enable web
+#sudo systemctl enable web
 
 ENDSSH
 

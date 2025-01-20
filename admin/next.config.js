@@ -16,10 +16,10 @@ module.exports = {
 
     return config
   },
-  experimental: {
-    turbo: {
-      optimizePackageImports: ['package-name']
-    }
+  // experimental: {
+  //   turbo: {
+  //     optimizePackageImports: ['package-name']
+  //   }
   },
   images: {
     remotePatterns: [
