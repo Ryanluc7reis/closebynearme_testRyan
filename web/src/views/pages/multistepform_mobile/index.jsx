@@ -19,7 +19,7 @@ export const MultiStepFormComponent = () => {
   const URI = process.env.NEXT_PUBLIC_GRAPHQL_URL
 
   const handleNext = () => {
-    if (!personalData.fullName || !personalData.email ) {
+    if (!personalData.fullName || !personalData.email) {
       let emptyField = ''
       if (!personalData.fullName) emptyField = 'fullName'
       else if (!personalData.email) emptyField = 'email'
@@ -136,9 +136,11 @@ export const MultiStepFormComponent = () => {
         }
       })
 
-      console.log('Answer from API:', response.data.createBuyer)
+      console.log(response.data.data.createBuyer)
+      alert('Buyer created successfully')
     } catch (error) {
-      console.error('Error to send data:', error)
+      console.error('Error to create Buyer:', error)
+      alert('Error to create Buyer')
     }
   }
 
@@ -153,7 +155,7 @@ export const MultiStepFormComponent = () => {
           {!option.textArea && !option.hasOverInput && (
             <>
               {currentStep === 1 || currentStep === 9 ? (
-                <CheckBoxComponent
+                <CheckBoxComponent                
                   option={option.option}
                   isChecked={selectedOptions.includes(option.option)}
                   onSelect={() => handleSelectOverOptions(index)}
@@ -313,6 +315,6 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   placeholderText: {
-    color:"#575454"
+    color: '#575454'
   }
 })
