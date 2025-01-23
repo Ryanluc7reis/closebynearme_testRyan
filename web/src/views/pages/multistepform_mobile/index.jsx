@@ -198,7 +198,7 @@ export const MultiStepFormComponent = () => {
               <TextInput
                 style={styles.input}
                 placeholder=' Jane Dempsey'
-                placeholderTextColor='#575454'
+                placeholderTextColor={styles.placeholderText}
                 value={personalData.fullName}
                 onChangeText={(text) => handlePersonalDataInputChange('fullName', text)}
               />
@@ -206,7 +206,8 @@ export const MultiStepFormComponent = () => {
               <Text style={styles.subLabel}>For session notifications and personalized updates</Text>
               <TextInput
                 style={styles.input}
-                placeholder='jana12@gmail.com'
+                placeholder='jane12@gmail.com'
+                placeholderTextColor={styles.placeholderText}
                 keyboardType='email-address'
                 value={personalData.email}
                 onChangeText={(text) => handlePersonalDataInputChange('email', text)}
@@ -216,6 +217,7 @@ export const MultiStepFormComponent = () => {
               <TextInput
                 style={styles.input}
                 placeholder='08/20/2003'
+                placeholderTextColor={styles.placeholderText}
                 value={personalData.birthday}
                 onChangeText={(text) => handlePersonalDataInputChange('birthday', text)}
               />
@@ -309,5 +311,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 10,
     textAlign: 'center'
+  },
+  placeholderText: {
+    color:"#575454"
   }
 })
