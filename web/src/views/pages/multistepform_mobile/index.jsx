@@ -5,7 +5,6 @@ import { dataSteps } from './dataQuestions.js'
 import { fieldMapping } from './dataQuestions.js'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 
-
 export const MultiStepFormComponent = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [selections, setSelections] = useState({})
@@ -16,9 +15,22 @@ export const MultiStepFormComponent = () => {
     email: '',
     birthday: ''
   })
+  const [errorMessage, setErrorMessage] = useState('')
   const URI = process.env.NEXT_PUBLIC_GRAPHQL_URL
 
   const handleNext = () => {
+    if (!personalData.fullName || !personalData.email ) {
+      let emptyField = ''
+      if (!personalData.fullName) emptyField = 'fullName'
+      else if (!personalData.email) emptyField = 'email'
+
+      setErrorMessage(`The field "${emptyField}" can't be empty.`)
+
+      return
+    }
+
+    setErrorMessage('')
+
     if (currentStep < dataSteps.length - 1) {
       setCustomInput('')
       setCurrentStep(currentStep + 1)
@@ -75,6 +87,7 @@ export const MultiStepFormComponent = () => {
       }
     }
   }
+
   const handlePersonalDataInputChange = (field, value) => {
     setPersonalData((prevData) => ({
       ...prevData,
@@ -91,44 +104,17 @@ export const MultiStepFormComponent = () => {
       [currentField]: [...(prev[currentField] || []).filter((v) => v !== customInput), text]
     }))
   }
-  const validateForm = () => {
-    if (!personalData.fullName) {
-      return { isValid: false, field: 'fullName' }
-    }
-    if (!personalData.email) {
-      return { isValid: false, field: 'email' }
-    }
-    if (!personalData.birthday) {
-      return { isValid: false, field: 'birthday' }
-    }
-
-    for (let field in formData) {
-      if (Array.isArray(formData[field]) && formData[field].length === 0) {
-        return { isValid: false, field: field }
-      } else if (!formData[field]) {
-        return { isValid: false, field: field }
-      }
-    }
-
-    return { isValid: true }
-  }
 
   const handleSubmit = async () => {
-    const validation = validateForm();
-  
-    if (!validation.isValid) {
-      return console.log(`The field "${validation.field}" is empty.`);
-    }
-  
     const updatedFormData = {
       ...formData,
       fullName: personalData.fullName || '',
       email: personalData.email || '',
       birthday: personalData.birthday || '',
       role: 'CLIENT',
-      createdAt: new Date().toISOString(),
-    };
-  
+      createdAt: new Date().toISOString()
+    }
+
     const query = {
       query: `
         mutation createBuyer($createBuyerInput: CreateBuyerInput!) {
@@ -139,29 +125,29 @@ export const MultiStepFormComponent = () => {
         }
       `,
       variables: {
-        createBuyerInput: updatedFormData,
-      },
-    };
-  
+        createBuyerInput: updatedFormData
+      }
+    }
+
     try {
       const response = await axios.post(`${URI}`, query, {
         headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      console.log('Answer from API:', response.data.createBuyer);
+          'Content-Type': 'application/json'
+        }
+      })
+
+      console.log('Answer from API:', response.data.createBuyer)
     } catch (error) {
-      console.error('Error to send data:', error);
+      console.error('Error to send data:', error)
     }
-  };
+  }
 
   const selectedOptions = selections[currentStep] || []
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {dataSteps[currentStep].map((option, index) => (
-        <View key={index} style={styles.optionContainer}>
+        <View key={`${currentStep}-${index}`} style={styles.optionContainer}>
           <Text style={styles.textQuestion}>{option.question}</Text>
 
           {!option.textArea && !option.hasOverInput && (
@@ -207,11 +193,12 @@ export const MultiStepFormComponent = () => {
 
           {option.hasOverInput === true && (
             <View>
-              <Text style={styles.label}>Name (Required)</Text>
+              <Text style={styles.label}>Full Name (Required)</Text>
               <Text style={styles.subLabel}>First Name, Last Name </Text>
               <TextInput
                 style={styles.input}
-                placeholder=' Jane Doe'
+                placeholder=' Jane Dempsey'
+                placeholderTextColor='#575454'
                 value={personalData.fullName}
                 onChangeText={(text) => handlePersonalDataInputChange('fullName', text)}
               />
@@ -219,7 +206,7 @@ export const MultiStepFormComponent = () => {
               <Text style={styles.subLabel}>For session notifications and personalized updates</Text>
               <TextInput
                 style={styles.input}
-                placeholder='joao@gmail.com'
+                placeholder='jana12@gmail.com'
                 keyboardType='email-address'
                 value={personalData.email}
                 onChangeText={(text) => handlePersonalDataInputChange('email', text)}
@@ -236,6 +223,8 @@ export const MultiStepFormComponent = () => {
           )}
         </View>
       ))}
+
+      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
       <View style={styles.buttonFlex}>
         <TouchableOpacity
@@ -314,5 +303,11 @@ const styles = StyleSheet.create({
   subLabel: {
     fontSize: 12,
     color: 'rgb(170, 162, 162)'
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 10,
+    textAlign: 'center'
   }
 })
