@@ -10,11 +10,11 @@ const CONFIG = {
     process.env.NODE_ENV === 'production'
       ? Base64UnEncript(process.env.DB_URI) || ''
       : process.env.DB_URI ||
-        'mongodb://ryan:ryan123@localhost:27017/closebynearmeDB',
+        'mongodb://ryan:ryan123@localhost:27017/closebynearmeDB?authSource=closebynearmeDB',
   DB_NAME:
     process.env.NODE_ENV === 'production'
       ? Base64UnEncript(process.env.DB_NAME) || ''
-      : process.env.DB_NAME || 'ryan',
+      : process.env.DB_NAME || 'closebynearmeDB',
   FRONTEND_URL: process.env.FRONTEND_URL || 'https://closebynearme.com',
   ADMIN_FRONTEND_URL:
     process.env.ADMIN_FRONTEND_URL || 'https://admin.closebynearme.com',
