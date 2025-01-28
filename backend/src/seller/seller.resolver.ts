@@ -17,7 +17,7 @@ export class SellerResolver {
     return this.sellerService.create(input);
   }
 
-  @Mutation(() => Seller)
+  @Mutation(() => String)
   async updateSeller(@Args('input') input: UpdateSellerInput) {
     return this.sellerService.updateSeller(input);
   }
