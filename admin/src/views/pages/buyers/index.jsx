@@ -31,7 +31,6 @@ export const ListBuyersComponent = () => {
                 Spiritual_Preferences
                 Subscription_Preferences
                 role
-                status
                 createdAt
               }
             }
