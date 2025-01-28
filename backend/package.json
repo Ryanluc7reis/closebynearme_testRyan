@@ -18,7 +18,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "nest start -p 4001",
+    "start": "nest start",
     "start:dev2": "nest start --watch",
     "start:dev": "$PWD/scripts/start.sh",
     "start:debug": "nest start --debug --watch",
