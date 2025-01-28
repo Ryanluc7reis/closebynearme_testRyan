@@ -11,9 +11,25 @@ import { Seller } from './entities/seller.entity';
 export class SellerResolver {
   constructor(private readonly sellerService: SellerService) {}
 
+  // @Mutation(() => String)
+  // @UseGuards(AuthGuard)
+  // async createSeller(@Args('input') input: CreateSellerInput) {
+  //   const newSeller = await this.sellerService.create(input);
+  //   return newSeller;
+  // }
   @Mutation(() => String)
-  async createSeller(@Args('input') input: CreateSellerInput) {
-    const newSeller = await this.sellerService.create(input);
-    return newSeller;
+  async createBuyer(
+    @Args('createSellerInput') createSellerInput: CreateSellerInput,
+  ): Promise<any> {
+    try {
+      const newSeller = await this.sellerService.create(createSellerInput);
+      return { message: `Created seller successfully`, data: newSeller };
+    } catch (error) {
+      console.error('Error creating buyer:', error.message);
+      return {
+        message: `Failed to create buyer: ${error.message}`,
+        success: false,
+      };
+    }
   }
 }
