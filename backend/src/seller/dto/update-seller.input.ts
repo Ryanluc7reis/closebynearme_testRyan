@@ -12,8 +12,4 @@ export class UpdateSellerInput {
   @Field(() => GraphQLObjectId)
   @IsNotEmpty()
   _id: ObjectId;
-
-  @Field(() => UpdateSellerData)
-  @IsNotEmpty()
-  data: UpdateSellerData;
 }

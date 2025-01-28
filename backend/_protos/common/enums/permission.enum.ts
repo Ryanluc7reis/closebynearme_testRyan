@@ -10,6 +10,7 @@ export enum PermissionsMenu {
   FAQS = 'FAQS',
   SETTINGS = 'SETTINGS',
   BUYERS = 'BUYERS',
+  SELLERS = 'SELLERS',
 }
 
 export enum PermissionAllowed {
@@ -22,6 +23,7 @@ export enum PermissionAllowed {
   FAQS = 'FAQS',
   SETTINGS = 'SETTINGS',
   BUYERS = 'BUYERS',
+  SELLERS = 'SELLERS',
   EMPTY = '',
 }
 
