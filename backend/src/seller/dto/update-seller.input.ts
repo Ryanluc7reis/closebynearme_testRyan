@@ -11,4 +11,8 @@ export class UpdateSellerInput {
   @Field(() => ID)
   @IsNotEmpty()
   _id: ObjectId;
+
+    @Field(() => UpdateSellerData)
+    @IsNotEmpty()
+    data: UpdateSellerData;
 }
