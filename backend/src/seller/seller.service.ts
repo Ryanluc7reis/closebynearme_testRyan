@@ -31,20 +31,21 @@ export class SellerService {
   }
 
   async updateSeller({ _id }: UpdateSellerInput) {
+    const sellerExists = await this.sellerModel.findById(_id);
+    if (!sellerExists) {
+      throw new Error('Seller not found');
+    }
+
     const updateSeller = await this.sellerModel.findOneAndUpdate(
       { _id },
       { isApproved: true },
       { new: true },
     );
-    if (!updateSeller) {
-      throw new Error('Seller not found');
-    }
-
     return updateSeller;
   }
 
   async deleteSellerById({ _id }: UpdateSellerInput) {
-    const seller = await this.sellerModel.findByIdAndDelete({ _id });
+    const seller = await this.sellerModel.findByIdAndDelete(_id);
     if (!seller) {
       throw new Error('Seller not found');
     }

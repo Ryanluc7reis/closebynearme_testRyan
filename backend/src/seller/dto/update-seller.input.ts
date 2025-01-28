@@ -1,15 +1,14 @@
 import { IsNotEmpty } from 'class-validator';
 import { CreateSellerInput } from './create-seller.input';
-import { InputType, Field, PartialType } from '@nestjs/graphql';
+import { InputType, Field, PartialType, ID } from '@nestjs/graphql';
 import { ObjectId } from 'mongoose';
-import GraphQLObjectId from 'graphql-type-object-id-no-deps';
 
 @InputType()
 export class UpdateSellerData extends PartialType(CreateSellerInput) {}
 
 @InputType()
 export class UpdateSellerInput {
-  @Field(() => GraphQLObjectId)
+  @Field(() => ID)
   @IsNotEmpty()
   _id: ObjectId;
 }
