@@ -12,8 +12,8 @@ export class SellerResolver {
   constructor(private readonly sellerService: SellerService) {}
 
   @Mutation(() => String)
-  @UseGuards(AuthGuard)
   async createSeller(@Args('input') input: CreateSellerInput) {
-    return this.sellerService.create(input);
+    const newSeller = await this.sellerService.create(input);
+    return newSeller;
   }
 }
