@@ -121,7 +121,7 @@ export class AuthController {
         title: 'Buyers',
         path: '/buyers',
         auth: true,
-        permission: 'BUYERS',
+        permission: 'ADMINS',
       },
       {
         icon: 'tabler:settings-2',
