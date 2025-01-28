@@ -11,7 +11,7 @@ import { Seller } from './entities/seller.entity';
 export class SellerResolver {
   constructor(private readonly sellerService: SellerService) {}
 
-  @Mutation(() => String)
+  @Mutation(() => Seller)
   async createSeller(@Args('input') input: CreateSellerInput) {
     const newSeller = await this.sellerService.create(input);
     return newSeller;
