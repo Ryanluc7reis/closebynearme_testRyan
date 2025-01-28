@@ -36,11 +36,18 @@ export class SellerService {
       { isApproved: true },
       { new: true },
     );
+    if (!updateSeller) {
+      throw new Error('Seller not found');
+    }
+
     return updateSeller;
   }
 
   async deleteSellerById({ _id }: UpdateSellerInput) {
-    await this.sellerModel.deleteOne({ _id });
+    const seller = await this.sellerModel.findByIdAndDelete({ _id });
+    if (!seller) {
+      throw new Error('Seller not found');
+    }
     return 'Seller deleted successfully';
   }
 }
