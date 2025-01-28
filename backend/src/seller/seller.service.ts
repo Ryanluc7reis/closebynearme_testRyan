@@ -31,7 +31,11 @@ export class SellerService {
   }
 
   async updateSeller({ _id }: UpdateSellerInput) {
+    console.log('ID recebido:', _id);
+
     const sellerExists = await this.sellerModel.findById(_id);
+    console.log('Vendedor encontrado:', sellerExists);
+
     if (!sellerExists) {
       throw new Error('Seller not found');
     }
@@ -41,6 +45,9 @@ export class SellerService {
       { isApproved: true },
       { new: true },
     );
+    await updateSeller.save();
+    console.log('Vendedor atualizado:', updateSeller);
+
     return updateSeller;
   }
 
