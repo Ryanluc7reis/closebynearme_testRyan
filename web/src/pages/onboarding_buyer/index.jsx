@@ -3,7 +3,7 @@ import authConfig from '@configs/auth'
 import { getCookie } from 'cookies-next'
 import client from '@apollo-client'
 
-import { MultiStepFormComponent } from '@views/multistepform_mobile'
+import { MultiStepFormComponent } from '@views/onboarding_buyer'
 
 function MultiStepFormPage() {
   return <MultiStepFormComponent />
