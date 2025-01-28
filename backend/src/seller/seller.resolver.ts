@@ -4,8 +4,8 @@ import { SellerService } from './seller.service';
 import { CreateSellerInput } from './dto/create-seller.input';
 import { UpdateSellerInput } from './dto/update-seller.input';
 //import { SellerPaginateResponse } from './entities/seller-paginate';
-//import { UseGuards } from '@nestjs/common';
-//import { AuthGuard } from '../auth/auth.guard';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
 import { Seller } from './entities/seller.entity';
 
 @Resolver(() => Seller)
@@ -18,15 +18,18 @@ export class SellerResolver {
   }
 
   @Mutation(() => String)
+  @UseGuards(AuthGuard)
   async updateSeller(@Args('input') input: UpdateSellerInput) {
     return this.sellerService.updateSeller(input);
   }
   @Query(() => [Seller])
+  @UseGuards(AuthGuard)
   async findSellers() {
     return this.sellerService.findAll();
   }
 
   @Mutation(() => String)
+  @UseGuards(AuthGuard)
   async deleteSeller(@Args('input') input: UpdateSellerInput) {
     return this.sellerService.deleteSellerById(input);
   }
