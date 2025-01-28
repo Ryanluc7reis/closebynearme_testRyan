@@ -53,7 +53,8 @@ export class Seller {
   @Prop({ required: true })
   rentalsAdvertises: string[];
 
-  @Field({ defaultValue: false })
+  @Field(() => Boolean, { defaultValue: false })
+  @Prop({ type: Boolean, default: false }) 
   @IsBoolean()
   isApproved: boolean;
 
