@@ -121,6 +121,13 @@ export class AuthController {
         title: 'Buyers',
         path: '/buyers',
         auth: true,
+        permission: 'BUYERS',
+      },
+      {
+        icon: 'tabler:settings-2',
+        title: 'Sellers',
+        path: '/sellers',
+        auth: true,
         permission: 'ADMINS',
       },
     ].filter((item) => permissions.includes(item.permission));
