@@ -15,7 +15,6 @@ export enum RolesAllowed {
 export enum AccountSchemaAllowed {
   ADMIN = 'ADMIN',
   CLIENT = 'CLIENT',
-  BUYER = 'BUYER',
   SUPER_ADMIN = 'SUPER_ADMIN',
   MANAGER = 'MANAGER',
 }

@@ -15,6 +15,7 @@ import { ProductsModule } from './products/products.module';
 import { SettingsModule } from './settings/settings.module';
 import { MongoConfigModule } from './common/modules/mongo/mongo.module';
 import { BuyerModule } from './buyer/buyer.module';
+import { SellerModule } from './seller/seller.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { BuyerModule } from './buyer/buyer.module';
     SettingsModule,
     MongoConfigModule,
     BuyerModule,
+    SellerModule,
   ],
   controllers: [],
   providers: [],

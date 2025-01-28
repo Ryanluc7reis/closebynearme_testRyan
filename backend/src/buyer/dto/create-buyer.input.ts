@@ -63,7 +63,7 @@ export class CreateBuyerInput {
   Subscription_Preferences: string[];
 
   @Field(() => [AccountSchemaAllowed], {
-    defaultValue: [AccountSchemaAllowed.BUYER],
+    defaultValue: [AccountSchemaAllowed.ADMIN],
   })
   @IsEnum(AccountSchemaAllowed, { each: true })
   role: AccountSchemaAllowed[];

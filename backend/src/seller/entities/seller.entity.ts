@@ -1,76 +1,61 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsEnum, IsDate } from 'class-validator';
+import { IsEnum, IsDate, IsEmail, IsBoolean } from 'class-validator';
 import { Document, ObjectId } from 'mongoose';
 import { AccountSchemaAllowed } from '../../../_protos/common';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-export type BuyerDocument = Buyer & Document<Buyer>;
+export type SellerDocument = Seller & Document<Seller>;
 
 @ObjectType()
 @Schema({
   timestamps: true,
   versionKey: false,
 })
-export class Buyer {
+export class Seller {
   @Field(() => ID)
   _id: ObjectId;
 
   @Field(() => String)
   @Prop({ required: true })
-  birthday: string;
+  companyName: string;
 
   @Field(() => String)
   @Prop({ required: true, unique: true, trim: true })
+  @IsEmail()
   email: string;
 
   @Field(() => String)
-  @Prop({ required: true })
+  @Prop({ required: true, trim: true })
   fullName: string;
 
-  @Field(() => [String], { nullable: true })
-  @Prop({ required: false })
-  Additional_Details?: string[];
+  @Field()
+  @Prop({ required: true, trim: true })
+  password: string;
+
+  @Field(() => String)
+  @Prop({ required: true })
+  phone: string;
 
   @Field(() => [String], { nullable: true })
   @Prop({ required: true })
-  Areas_Of_Interest: string[];
+  rentalsOffers: string[];
 
   @Field(() => [String], { nullable: true })
   @Prop({ required: true })
-  Delivery_Method: string[];
+  serviceArea: string[];
 
   @Field(() => [String], { nullable: true })
   @Prop({ required: true })
-  Emotional_State: string[];
+  physicalLocation: string[];
 
   @Field(() => [String], { nullable: true })
   @Prop({ required: true })
-  Experience_Level: string[];
+  rentalsAdvertises: string[];
 
-  @Field(() => [String], { nullable: true })
-  @Prop({ required: true })
-  Goals_And_Expectations: string[];
-
-  @Field(() => [String], { nullable: true })
-  @Prop({ required: true })
-  Personality_Match: string[];
-
-  @Field(() => [String], { nullable: true })
-  @Prop({ required: true })
-  Preferred_Psychic_Services: string[];
-
-  @Field(() => [String], { nullable: true })
-  @Prop({ required: true })
-  Scheduling_Preferences: string[];
-
-  @Field(() => [String], { nullable: true })
-  @Prop({ required: true })
-  Spiritual_Preferences: string[];
-
-  @Field(() => [String], { nullable: true })
-  @Prop({ required: true })
-  Subscription_Preferences: string[];
+  @Field({ defaultValue: false })
+  @IsBoolean()
+  isApproved: boolean;
 
   @Field(() => [AccountSchemaAllowed])
   @Prop({ required: true, type: [String] })
@@ -83,4 +68,4 @@ export class Buyer {
   createdAt: Date;
 }
 
-export const BuyerSchema = SchemaFactory.createForClass(Buyer);
+export const SellerSchema = SchemaFactory.createForClass(Seller);
