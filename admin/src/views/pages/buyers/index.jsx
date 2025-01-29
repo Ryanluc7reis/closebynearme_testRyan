@@ -30,8 +30,6 @@ export const ListBuyersComponent = () => {
                 Scheduling_Preferences
                 Spiritual_Preferences
                 Subscription_Preferences
-                role
-                createdAt
               }
             }
           `

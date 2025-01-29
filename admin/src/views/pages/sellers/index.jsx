@@ -9,36 +9,33 @@ export const ListSellersComponent = () => {
   const [sellersData, setSellersData] = useState([])
   const URI = process.env.NEXT_PUBLIC_GRAPHQL_URL
 
-  useEffect(() => {
-    const getSellers = async () => {
-      try {
-        const response = await axios.post(`${URI}`, {
-          query: `
-           query {
-              findSellers{
-                _id
-                companyName
-                email
-                phone
-                contactPersonName
-                serviceArea
-                physicalLocation
-                rentalsAdvertises
-                rentalsOffers
-                password
-                isApproved
-                role
-                createdAt
-              }
+  const getSellers = async () => {
+    try {
+      const response = await axios.post(`${URI}`, {
+        query: `
+         query {
+            findSellers{
+              _id
+              companyName
+              email
+              phone
+              contactPersonName
+              serviceArea
+              physicalLocation
+              rentalsAdvertises
+              rentalsOffers
+              isApproved
             }
-          `
-        })
-        setSellersData(response.data.data.findSellers)
-      } catch (error) {
-        console.error('Error fetching seller:', error)
-      }
+          }
+        `
+      })
+      setSellersData(response.data.data.findSellers)
+    } catch (error) {
+      console.error('Error fetching seller:', error)
     }
+  }
 
+  useEffect(() => {
     getSellers()
   }, [])
 
@@ -66,7 +63,6 @@ export const ListSellersComponent = () => {
       }
     } catch (error) {
       console.error('Error to delete seller:', error)
-      alert('Error to delete seller  ')
     }
   }
 
@@ -93,7 +89,6 @@ export const ListSellersComponent = () => {
       }
     } catch (error) {
       console.error('Error to update seller:', error)
-      alert('Error to approved seller  ')
     }
   }
   const openDeleteModal = () => {
@@ -148,6 +143,10 @@ export const ListSellersComponent = () => {
             <View style={styles.userDataFlex}>
               <Text style={styles.userTitleData}>Company Name</Text>
               <Text style={styles.userTextData}>{seller.companyName}</Text>
+            </View>
+            <View style={styles.userDataFlex}>
+              <Text style={styles.userTitleData}> Approved</Text>
+              <Text style={styles.userTextData}>{seller.isApproved}</Text>
             </View>
             <TouchableOpacity onPress={() => handleApprovedSeller(seller._id)} style={styles.approvedButton}>
               <Text style={styles.approvedTextButton}>Approved</Text>
@@ -207,6 +206,7 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderRadius: 8,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     gap: 10
   },
   userTitleData: {
@@ -236,7 +236,9 @@ const styles = StyleSheet.create({
   approvedButton: {
     padding: 8,
     borderRadius: 7,
-    backgroundColor: '#7da5fa'
+    backgroundColor: '#7da5fa',
+    alignItems: 'center',
+    textAlign: 'center'
   },
   approvedTextButton: {
     color: '#2464ee'
@@ -244,7 +246,9 @@ const styles = StyleSheet.create({
   deleteButton: {
     padding: 8,
     borderRadius: 7,
-    backgroundColor: '#f74e4e'
+    backgroundColor: '#f74e4e',
+    alignItems: 'center',
+    textAlign: 'center'
   },
   deleteTextButton: {
     color: '#f30101'
