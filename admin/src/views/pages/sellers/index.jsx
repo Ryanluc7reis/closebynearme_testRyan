@@ -33,7 +33,6 @@ export const ListSellersComponent = () => {
             }
           `
         })
-        console.log(response)
         setSellersData(response.data.data.findSellers)
       } catch (error) {
         console.error('Error fetching seller:', error)
@@ -43,7 +42,7 @@ export const ListSellersComponent = () => {
     getSellers()
   }, [])
 
-  const handleDeleteSeller = (_id) => {
+  const handleDeleteSeller = async (_id) => {
     const query = {
       query: `
       mutation DeleteSeller($input: UpdateSellerInput!) {
@@ -51,16 +50,15 @@ export const ListSellersComponent = () => {
         }
     `,
       variables: {
-        input: _id
+        input: { _id }
       }
     }
     try {
-      const response = axios.post(`${URI}`, query, {
+      const response = await axios.post(`${URI}`, query, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
-      console.log(response)
       if (response.status === 200 && response.data.data.deleteSeller === 'Seller deleted successfully') {
         alert('Seller deleted successfully')
         getSellers()
@@ -72,7 +70,7 @@ export const ListSellersComponent = () => {
     }
   }
 
-  const handleApprovedSeller = (_id) => {
+  const handleApprovedSeller = async (_id) => {
     const query = {
       query: `
           mutation UpdateSeller($input: UpdateSellerInput!) {
@@ -80,16 +78,15 @@ export const ListSellersComponent = () => {
           }
     `,
       variables: {
-        input: _id
+        input: { _id }
       }
     }
     try {
-      const response = axios.post(`${URI}`, query, {
+      const response = await axios.post(`${URI}`, query, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
-        console.log(response)
       if (response.status === 200 && response.data.data.updateSeller === 'Seller updated successfully') {
         alert('Seller approved successfully')
         getSellers()
@@ -152,24 +149,27 @@ export const ListSellersComponent = () => {
               <Text style={styles.userTitleData}>Company Name</Text>
               <Text style={styles.userTextData}>{seller.companyName}</Text>
             </View>
+            <TouchableOpacity onPress={() => handleApprovedSeller(seller._id)} style={styles.approvedButton}>
+              <Text style={styles.approvedTextButton}>Approved</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openDeleteModal} style={styles.deleteButton}>
+              <Text style={styles.deleteTextButton}>Delete</Text>
+            </TouchableOpacity>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleApprovedSeller(seller._id)} style={styles.approvedButton}>
-            <Text>Approved</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openDeleteModal} style={styles.deleteButton}>
-            <Text>Delete</Text>
-          </TouchableOpacity>
+          <Modal visible={isModalDeleteVisible} animationType='fade' transparent onRequestClose={closeDeleteModal}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalDeleteContainer}>
+                <Text style={styles.modalText}>Are you sure you want to delete this seller?</Text>
 
-          <Modal visible={isModalDeleteVisible} animationType='slide' onRequestClose={closeDeleteModal}>
-            <View style={styles.modalContainer}>
-              <Text>Are you sure you want to delete this seller ?</Text>
-              <TouchableOpacity onPress={handleDeleteSeller(seller._id)} style={styles.deleteButton}>
-                <Text>Delete</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={closeDeleteModal}>
-                <Text>Cancel</Text>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleDeleteSeller(seller._id)} style={styles.deleteButton}>
+                  <Text style={styles.deleteText}>Delete</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={closeDeleteModal} style={styles.cancelButton}>
+                  <Text style={styles.cancelText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </Modal>
         </>
@@ -236,14 +236,39 @@ const styles = StyleSheet.create({
   approvedButton: {
     padding: 8,
     borderRadius: 7,
-    backgroundColor: '#7da5fa',
+    backgroundColor: '#7da5fa'
+  },
+  approvedTextButton: {
     color: '#2464ee'
   },
   deleteButton: {
     padding: 8,
     borderRadius: 7,
-    backgroundColor: '#f74e4e',
+    backgroundColor: '#f74e4e'
+  },
+  deleteTextButton: {
     color: '#f30101'
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalDeleteContainer: {
+    width: '80%',
+    height: 'auto',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20
   },
   closeText: {
     color: 'white',
