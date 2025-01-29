@@ -15,7 +15,9 @@ export const CheckBoxComponent = ({ option, isChecked, onSelect }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 13,
+    marginBottom: 13,
   },
 
   checkbox: {
