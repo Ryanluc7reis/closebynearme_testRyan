@@ -5,7 +5,7 @@ import { dataSteps } from './dataQuestions.js'
 import { fieldMapping } from './dataQuestions.js'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 
-export const MultiStepFormComponent = () => {
+export const OnBoardingBuyerComponent = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [selections, setSelections] = useState({})
   const [customInput, setCustomInput] = useState('')
@@ -155,7 +155,7 @@ export const MultiStepFormComponent = () => {
           {!option.textArea && !option.hasOverInput && (
             <>
               {currentStep === 1 || currentStep === 9 ? (
-                <CheckBoxComponent                
+                <CheckBoxComponent
                   option={option.option}
                   isChecked={selectedOptions.includes(option.option)}
                   onSelect={() => handleSelectOverOptions(index)}

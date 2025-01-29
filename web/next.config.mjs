@@ -5,11 +5,11 @@ const nextConfig = withTM(['react-native', 'react-native-web'])({
   reactStrictMode: true,
   output: 'standalone',
 
-  // experimental: {
-  //   turbo: {
-  //     optimizePackageImports: ['package-name']
-  //   }
-  // },
+  experimental: {
+    turbo: {
+      optimizePackageImports: ['package-name']
+    }
+  },
   images: {
     remotePatterns: [
       {

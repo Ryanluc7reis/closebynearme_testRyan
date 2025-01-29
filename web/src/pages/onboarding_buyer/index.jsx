@@ -3,13 +3,13 @@ import authConfig from '@configs/auth'
 import { getCookie } from 'cookies-next'
 import client from '@apollo-client'
 
-import { MultiStepFormComponent } from '@views/onboarding_buyer'
+import { OnBoardingBuyerComponent } from '@views/onboarding_buyer'
 
-function MultiStepFormPage() {
-  return <MultiStepFormComponent />
+function OnBoardingBuyerPage() {
+  return <OnBoardingBuyerComponent />
 }
 
-MultiStepFormPage.guestGuard = true
+OnBoardingBuyerPage.guestGuard = true
 
 export const getServerSideProps = async ({ req, res, query }) => {
   const token = getCookie(authConfig.cookieTokenKeyName, { req, res })
@@ -24,4 +24,4 @@ export const getServerSideProps = async ({ req, res, query }) => {
   }
 }
 
-export default MultiStepFormPage
+export default OnBoardingBuyerPage
