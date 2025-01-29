@@ -27,7 +27,7 @@ export class Seller {
 
   @Field(() => String)
   @Prop({ required: true, trim: true })
-  fullName: string;
+  contactPersonName: string;
 
   @Field()
   @Prop({ required: true, trim: true })
@@ -36,6 +36,10 @@ export class Seller {
   @Field(() => String)
   @Prop({ required: true })
   phone: string;
+
+  @Field(() => String)
+  @Prop({ required: true })
+  website: string;
 
   @Field(() => [String], { nullable: true })
   @Prop({ required: true })
@@ -54,7 +58,7 @@ export class Seller {
   rentalsAdvertises: string[];
 
   @Field(() => Boolean, { defaultValue: false })
-  @Prop({ type: Boolean, default: false }) 
+  @Prop({ type: Boolean, default: false })
   @IsBoolean()
   isApproved: boolean;
 

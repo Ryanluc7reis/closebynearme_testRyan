@@ -23,7 +23,7 @@ export class CreateSellerInput {
 
   @Field(() => String)
   @IsString()
-  fullName: string;
+  contactPersonName: string;
 
   @Field()
   @IsString()
@@ -33,6 +33,10 @@ export class CreateSellerInput {
   @Field(() => String)
   @IsString()
   phone: string;
+
+  @Field(() => String)
+  @IsString()
+  website: string;
 
   @Field(() => [String], { nullable: true })
   @IsArray()
