@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { DefaultStylesBase, HeaderType } from '@styles/interfaces'
 
+//import LoginFormComponent from '../../../components/LoginFormComponent'
+
 interface Props {
   type?: HeaderType
   isMobile: boolean
@@ -34,6 +36,8 @@ const HeaderStyles = (
 
 function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
   const styles = HeaderStyles(isMobile)[type]
+
+  //const [modalLogin, setModalLogin] = useState(false)
 
   return (
     <nav className='container mx-auto px-5 sm:px-0'>
@@ -75,6 +79,27 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
         )}
         {!isMobile && type === 'ProductHeader' && (
           <div className='flex flex-col items-start justify-center font-inter font-bold text-[20px] leading-[19.45px]'>
+            {/* <div className='flex gap-[9px]'>
+              <h3>Are you already a vendor ? </h3>
+              <Button
+                label='Login'
+                color='bg-background'
+                weight='font-semibold'
+                onClick={() => {}}
+                textSize={'text-2xl'}
+                className='mx-2'
+                textClassName='text-lg md:text-2xl'
+              />
+            </div> */}
+            {/* {modalLogin && <LoginFormComponent loginSeller />} */}
+            <a
+              href='/dashboard-seller'
+              target='_blank'
+              className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg'
+            >
+              My dashboard seller
+            </a>
+
             <div>phone - (424) 216-6633</div>
             <a href='mailto:hello@closebynearme.com'>email - hello@closebynearme.com</a>
           </div>

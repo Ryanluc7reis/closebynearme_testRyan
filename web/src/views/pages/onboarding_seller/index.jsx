@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native'
+import { Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Modal, Pressable, View } from 'react-native'
 import { BoxQuestion } from './components/BoxQuestion'
 import { dataSteps } from './components/dataQuestions'
 
@@ -65,11 +65,13 @@ export const OnBoardingSellerComponent = () => {
       {dataSteps && (
         <BoxQuestion questions={dataSteps} onAnswerChange={handleAnswerChange} showModal={handleConfirmPassword} />
       )}
-
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+<View style={styles.submitButtonContainer}>
+<TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
 
+</View>
+    
       <Modal visible={modalVisible} transparent animationType='fade' onRequestClose={() => setModalVisible(false)}>
         <Pressable style={styles.modalContainer} onPress={() => setModalVisible(false)}>
           <Pressable onPress={(e) => e.stopPropagation()} style={styles.modalContent}>
@@ -96,7 +98,6 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '100%',
     flexDirection: 'column',
-    alignItems: 'center'
   },
   titleText: {
     color: '#000',
@@ -111,6 +112,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     width: '70%'
+  },
+  submitButtonContainer : {
+    width: '100%',
+    alignItems: 'center'
   },
   submitButtonText: {
     color: '#fff',

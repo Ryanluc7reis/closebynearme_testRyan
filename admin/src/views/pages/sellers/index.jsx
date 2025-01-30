@@ -146,7 +146,7 @@ export const ListSellersComponent = () => {
             </View>
             <View style={styles.userDataFlex}>
               <Text style={styles.userTitleData}> Approved</Text>
-              <Text style={styles.userTextData}>{seller.isApproved}</Text>
+              <Text style={styles.userTextData}>{seller.isApproved === true ? 'Yes' : 'No'}</Text>
             </View>
             <TouchableOpacity onPress={() => handleApprovedSeller(seller._id)} style={styles.approvedButton}>
               <Text style={styles.approvedTextButton}>Approved</Text>
@@ -237,6 +237,8 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 7,
     backgroundColor: '#7da5fa',
+    height: 30,
+    width: 'auto',
     alignItems: 'center',
     textAlign: 'center'
   },
@@ -248,7 +250,9 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     backgroundColor: '#f74e4e',
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    width: 'auto',
+    height: 30
   },
   deleteTextButton: {
     color: '#f30101'
