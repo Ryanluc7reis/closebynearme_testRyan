@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 7,
     backgroundColor: '#7da5fa',
-    height: 30,
+    height: 35,
     width: 'auto',
     alignItems: 'center',
     textAlign: 'center'
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     width: 'auto',
-    height: 30
+    height: 35
   },
   deleteTextButton: {
     color: '#f30101'
