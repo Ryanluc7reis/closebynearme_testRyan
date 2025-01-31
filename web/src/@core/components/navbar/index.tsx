@@ -86,17 +86,32 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
           <div className='flex flex-col items-start justify-center font-inter font-bold text-[20px] leading-[19.45px]'>
             <div>phone - (424) 216-6633</div>
             <a href='mailto:hello@closebynearme.com'>email - hello@closebynearme.com</a>
+            <div className='flex items-center gap=[6]'>
+              <h3 >Are you a seller? </h3> 
+              <Link href='/auth/login/'>
+                <button
+            
+                className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px]'
+              >
+                Sign in as seller
+              </button>
+            </Link>
+             
+              </div>
           </div>
         )}
         {!isMobile && type === 'ProductHeaderWithSeller' && (
           <div className='flex flex-col items-start justify-center font-inter font-bold text-[20px] leading-[19.45px]'>
-            <a
+            {/* <Link >
+             <a
               href='/dashboard-seller'
               className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px]'
             >
               My dashboard seller
             </a>
 
+            </Link> */}
+           
             <div>phone - (424) 216-6633</div>
             <a href='mailto:hello@closebynearme.com'>email - hello@closebynearme.com</a>
           </div>
