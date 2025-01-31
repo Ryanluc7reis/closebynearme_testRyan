@@ -1,25 +1,26 @@
 import React from 'react'
 
 //import { useForm } from 'react-hook-form'
-import { useAuth } from 'src/hooks/useAuth'
+
+//import { useAuth } from 'src/hooks/useAuth'
 
 
 // const defaultValues = {
 //   password: '',
 //   email: ''
 // }
-interface Props {
-  loginSeller: boolean
-}
+// interface Props {
+//   loginSeller: boolean
+// }
 
-export interface LoginValues {
-  email: string
-  password: string
-}
+// export interface LoginValues {
+//   email: string
+//   password: string
+// }
 
 
-const LoginFormComponent = ({ loginSeller }: Props) => {
-  const auth = useAuth()
+const LoginFormComponent = () => {
+ // const auth = useAuth()
 
   // const { control, setError, handleSubmit } = useForm({
   //   defaultValues,
@@ -47,6 +48,7 @@ const LoginFormComponent = ({ loginSeller }: Props) => {
 
   return (
     <h1>component login</h1>
+    
     // <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
     //   {/* <div sx={{ mb: 4 }}>
     //     <input
