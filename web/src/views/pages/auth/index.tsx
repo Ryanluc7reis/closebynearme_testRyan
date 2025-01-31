@@ -1,4 +1,4 @@
-import * as Yup from 'yup'
+
 import React from 'react'
 import Button from '@mui/material/Button'
 import { useForm, Controller } from 'react-hook-form'
@@ -6,7 +6,6 @@ import { useAuth } from 'src/hooks/useAuth'
 import styled from 'styled-components'
 import NavbarHeader from '@core/components/navbar'
 import TextField from '@mui/material/TextField'
-import { yupResolver } from '@hookform/resolvers/yup'
 
 const Container = styled.div`
   display: flex;
@@ -53,10 +52,8 @@ export interface LoginValues {
 }
 
 const LoginComponent = () => {
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email not valid').required('Please enter this field'),
-    password: Yup.string().min(8, 'Min 8 digits').required('Please enter this field')
-  })
+
+
   const auth = useAuth()
   const {
     control,
@@ -65,8 +62,7 @@ const LoginComponent = () => {
     formState: { errors }
   } = useForm({
     defaultValues,
-    mode: 'onBlur',
-    resolver: yupResolver(LoginSchema)
+    mode: 'onBlur'
   })
 
   const onSubmit = (data: LoginValues) => {
