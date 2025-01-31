@@ -1,6 +1,7 @@
 const authConfig = {
   meEndpoint: '/auth/me',
   loginEndpoint: '/auth/login',
+  loginSellerEndpoint: '/auth/login-seller',
 
   //   registerEndpoint: '/jwt/register',
   storageTokenKeyName: 'accessToken',

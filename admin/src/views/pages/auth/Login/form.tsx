@@ -20,8 +20,11 @@ const defaultValues = {
   password: '',
   email: ''
 }
+interface Props {
+  loginSeller: boolean
+}
 
-const LoginFormComponent = () => {
+const LoginFormComponent = ({ loginSeller }: Props) => {
   const auth = useAuth()
 
   const { control, setError, handleSubmit } = useForm({
@@ -32,6 +35,14 @@ const LoginFormComponent = () => {
 
   const onSubmit = (data: LoginValues) => {
     const { email, password } = data
+    if (loginSeller) {
+      auth.loginSeller({ email, password, rememberMe: true }, () => {
+        setError('email', {
+          type: 'manual',
+          message: 'Email or Password is invalid'
+        })
+      })
+    }
     auth.login({ email, password, rememberMe: true }, () => {
       setError('email', {
         type: 'manual',
