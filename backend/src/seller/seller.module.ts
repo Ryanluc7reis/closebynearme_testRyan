@@ -10,5 +10,6 @@ import { Seller, SellerSchema } from './entities/seller.entity';
     MongooseModule.forFeature([{ name: Seller.name, schema: SellerSchema }]),
   ],
   providers: [SellerService, SellerResolver],
+  exports: [SellerService],
 })
 export class SellerModule {}

@@ -214,7 +214,6 @@ export class AuthService {
     return await this.sellerService.getProfile(sellerId);
   }
 
-
   async validate(token: string) {
     const decoded = this.jwtService.verifySessionToken(token);
 
