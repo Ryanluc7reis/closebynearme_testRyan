@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, Inject,  NotFoundException, } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, FilterQuery } from 'mongoose';
+import { Model, FilterQuery, ObjectId } from 'mongoose';
 import { CreateSellerInput } from './dto/create-seller.input';
 import { UpdateSellerInput } from './dto/update-seller.input';
 import { Seller, SellerDocument } from './entities/seller.entity';
@@ -54,7 +54,6 @@ export class SellerService {
     }
     return model;
   }
-
 
   async updateSeller({ _id }: UpdateSellerInput) {
     const sellerExists = await this.sellerModel.findById(_id);
