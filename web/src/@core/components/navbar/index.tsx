@@ -31,8 +31,8 @@ const HeaderStyles = (
       justifyContent: 'justify-between',
       mdJustifyContent: ''
     },
-    ProductHeaderWithSeller : {
-        justifyContent: 'justify-between',
+    ProductHeaderWithSeller: {
+      justifyContent: 'justify-between',
       mdJustifyContent: 'md:justify-between'
     }
   }
@@ -87,17 +87,13 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
             <div>phone - (424) 216-6633</div>
             <a href='mailto:hello@closebynearme.com'>email - hello@closebynearme.com</a>
             <div className='flex items-center gap=[6]'>
-              <h3 >Are you a seller? </h3> 
+              <h3>Are you already a seller? </h3>
               <Link href='/auth/login/'>
-                <button
-            
-                className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px]'
-              >
-                Sign in as seller
-              </button>
-            </Link>
-             
-              </div>
+                <button className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px] ml-[5px]'>
+                  Sign in as seller
+                </button>
+              </Link>
+            </div>
           </div>
         )}
         {!isMobile && type === 'ProductHeaderWithSeller' && (
@@ -111,7 +107,7 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
             </a>
 
             </Link> */}
-           
+
             <div>phone - (424) 216-6633</div>
             <a href='mailto:hello@closebynearme.com'>email - hello@closebynearme.com</a>
           </div>
