@@ -30,6 +30,10 @@ const HeaderStyles = (
     hidden: {
       justifyContent: 'justify-between',
       mdJustifyContent: ''
+    },
+    ProductHeaderWithSeller : {
+        justifyContent: 'justify-between',
+      mdJustifyContent: 'md:justify-between'
     }
   }
 }
@@ -52,6 +56,7 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
               height={132}
               draggable={false}
               className='select-none w-[140px] h-[79px] sm:w-[233px] sm:h-[132px]'
+              priority
             />
           </Link>
         </>
@@ -79,23 +84,15 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
         )}
         {!isMobile && type === 'ProductHeader' && (
           <div className='flex flex-col items-start justify-center font-inter font-bold text-[20px] leading-[19.45px]'>
-            {/* <div className='flex gap-[9px]'>
-              <h3>Are you already a vendor ? </h3>
-              <Button
-                label='Login'
-                color='bg-background'
-                weight='font-semibold'
-                onClick={() => {}}
-                textSize={'text-2xl'}
-                className='mx-2'
-                textClassName='text-lg md:text-2xl'
-              />
-            </div> */}
-            {/* {modalLogin && <LoginFormComponent loginSeller />} */}
+            <div>phone - (424) 216-6633</div>
+            <a href='mailto:hello@closebynearme.com'>email - hello@closebynearme.com</a>
+          </div>
+        )}
+        {!isMobile && type === 'ProductHeaderWithSeller' && (
+          <div className='flex flex-col items-start justify-center font-inter font-bold text-[20px] leading-[19.45px]'>
             <a
               href='/dashboard-seller'
-              target='_blank'
-              className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg'
+              className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px]'
             >
               My dashboard seller
             </a>
@@ -112,6 +109,7 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
             height={21}
             draggable={false}
             className='select-none'
+            priority
           />
         )}
       </div>

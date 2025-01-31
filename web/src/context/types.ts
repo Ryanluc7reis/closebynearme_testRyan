@@ -19,4 +19,5 @@ export type AuthValuesType = {
   setLoading: (value: boolean) => void
   setUser: (value: null) => void
   login: (params: LoginParams, errorCallback?: ErrCallbackType) => void
+  loginSeller: (params: LoginParams, errorCallback?: ErrCallbackType) => void
 }

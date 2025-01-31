@@ -1,137 +1,222 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native'
-import { fieldMapping } from './dataQuestions'
+import { TextField } from '@mui/material'
+import styled from 'styled-components'
+
+//import { useRouter } from 'next/router';
 import { CheckBoxComponent } from '../../../../components/CheckBoxComponent'
+import { fieldMapping } from './dataQuestions'
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+`
+
+const TitleContainer = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 15px solid #0bc9b4;
+  border-radius: 7px;
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  gap: 7px;
+`
+
+const TitleText = styled.h2`
+  color: #000;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+`
+
+const SubTitleContainer = styled.div`
+  display: flex;
+  gap: 7px;
+`
+
+const SubTitleText = styled.p`
+  color: #9fb1af;
+  text-align: center;
+`
+
+const QuestionBox = styled.div`
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+`
+
+const QuestionText = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+`
+
+const OptionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`
+
+const OptionText = styled.p`
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 500;
+`
 
 export const BoxQuestion = ({ questions, onAnswerChange }) => {
   const [answers, setAnswers] = useState({})
   const [textInputValues, setTextInputValues] = useState({})
+  const [focusedInput, setFocusedInput] = useState(null)
+
+  //const router = useRouter();
+  const urlLoginSeller = 'http://localhost:3000/login-seller'
 
   const handleTextChange = (index, value) => {
-    const fieldKey = fieldMapping[index];
-    const updatedAnswers = { ...answers, [fieldKey]: value };
-  
-    setAnswers(updatedAnswers);
-    onAnswerChange(updatedAnswers);
-  };
-  
+    const fieldKey = fieldMapping[index]
+    const updatedAnswers = { ...answers, [fieldKey]: value }
+
+    setAnswers(updatedAnswers)
+    onAnswerChange(updatedAnswers)
+  }
+
   const handleMultipleOptionsWithText = (index, option) => {
-    const fieldKey = fieldMapping[index];
-    const currentValues = answers[fieldKey] || [];
+    const fieldKey = fieldMapping[index]
+    const currentValues = answers[fieldKey] || []
     const updatedValues = currentValues.includes(option)
       ? currentValues.filter((item) => item !== option)
-      : [...currentValues, option];
-  
-    const updatedAnswers = { ...answers, [fieldKey]: updatedValues };
-    
-    setAnswers(updatedAnswers);
-    onAnswerChange(updatedAnswers);
-  };
-  
+      : [...currentValues, option]
+
+    const updatedAnswers = { ...answers, [fieldKey]: updatedValues }
+
+    setAnswers(updatedAnswers)
+    onAnswerChange(updatedAnswers)
+  }
 
   const handleTextInMultipleOptions = (index, value) => {
-    const fieldKey = fieldMapping[index];
+    const fieldKey = fieldMapping[index]
     const updatedAnswers = {
       ...answers,
-      [fieldKey]: [...(answers[fieldKey] || []).filter((opt) => opt !== value), value],
-    };
-  
-    setTextInputValues((prev) => ({ ...prev, [fieldKey]: value }));
-    setAnswers(updatedAnswers);
-    onAnswerChange(updatedAnswers);
-  };
-  
-  
+      [fieldKey]: [...(answers[fieldKey] || []).filter((opt) => opt !== value), value]
+    }
+
+    setTextInputValues((prev) => ({ ...prev, [fieldKey]: value }))
+    setAnswers(updatedAnswers)
+    onAnswerChange(updatedAnswers)
+  }
 
   const handleSingleOption = (index, option) => {
-    const fieldKey = fieldMapping[index];
-    const updatedAnswers = { ...answers, [fieldKey]: [option] };
-  
-    setAnswers(updatedAnswers);
-    onAnswerChange(updatedAnswers);
-  };
-  
+    const fieldKey = fieldMapping[index]
+    const updatedAnswers = { ...answers, [fieldKey]: [option] }
+
+    setAnswers(updatedAnswers)
+    onAnswerChange(updatedAnswers)
+  }
+
+  const handleBlur = (index) => {
+    const fieldKey = fieldMapping[index]
+    const value = textInputValues[fieldKey] || ''
+    if (value.trim() !== '') {
+      handleTextInMultipleOptions(index, value)
+    }
+    setFocusedInput(null)
+  }
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <Container>
+      <TitleContainer>
+        <TitleText>Seller Application</TitleText>
+        <SubTitleContainer>
+          <SubTitleText>Are you already a seller?</SubTitleText>
+          <a href={urlLoginSeller} style={{ color: '#0BC9B4', textDecoration: 'none' }}>
+            Login
+          </a>
+        </SubTitleContainer>
+      </TitleContainer>
       {questions.map((question, index) => (
-        <View key={index} style={styles.questionBox}>
-          <Text style={styles.questionText}>{question.question}</Text>
+        <QuestionBox key={index}>
+          <QuestionText>{question.question}</QuestionText>
 
           {question.textArea && !question.option && (
-            <TextInput
-              style={styles.textInput}
+            <TextField
+              fullWidth
               placeholder='Enter here...'
               value={answers[fieldMapping[index]] || ''}
-              onChangeText={(value) => handleTextChange(index, value)}
+              onChange={(e) => handleTextChange(index, e.target.value)}
+              onFocus={() => setFocusedInput(index)}
+              onBlur={() => handleBlur(index)}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    border: 'none',
+                    borderBottom: `2px solid ${focusedInput === index ? '#0BC9B4' : '#bebaba'}`
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderBottom: '2px solid #0BC9B4'
+                  }
+                }
+              }}
             />
           )}
 
           {question.textArea && question.option && (
-            <View>
+            <div>
               {question.option.map((opt, optIndex) => (
                 <CheckBoxComponent
                   key={optIndex}
                   option={opt}
                   isChecked={answers[fieldMapping[index]]?.includes(opt) || false}
                   onSelect={() => handleMultipleOptionsWithText(index, opt)}
+                  type='checkbox'
                 />
               ))}
-              <TextInput
-                style={styles.textInput}
-                placeholder='Specify here...'
-                value={textInputValues[fieldMapping[index]] || ''}
-                onChangeText={(value) => handleTextInMultipleOptions(index, value)}
-              />
-            </View>
+              <OptionContainer>
+                <OptionText>Other</OptionText>
+                <TextField
+                  fullWidth
+                  placeholder='Specify here...'
+                  value={textInputValues[fieldMapping[index]] || ''}
+                  onChange={(e) => setTextInputValues((prev) => ({ ...prev, [fieldMapping[index]]: e.target.value }))}
+                  onBlur={() => handleBlur(index)}
+                  onFocus={() => setFocusedInput(index)}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        border: 'none',
+                        borderBottom: `2px solid ${focusedInput === index ? '#0BC9B4' : '#bebaba'}`
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderBottom: '2px solid #0BC9B4'
+                      }
+                    }
+                  }}
+                />
+              </OptionContainer>
+            </div>
           )}
 
           {!question.textArea && question.option && (
-            <View>
+            <div>
               {question.option.map((opt, optIndex) => (
                 <CheckBoxComponent
                   key={optIndex}
                   option={opt}
                   isChecked={answers[fieldMapping[index]]?.includes(opt) || false}
                   onSelect={() => handleSingleOption(index, opt)}
+                  type='radio'
                 />
               ))}
-            </View>
+            </div>
           )}
-        </View>
+        </QuestionBox>
       ))}
-    </ScrollView>
+    </Container>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20
-  },
-  questionBox: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
-    width: '70%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3
-  },
-  questionText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginTop: 10
-  }
-})

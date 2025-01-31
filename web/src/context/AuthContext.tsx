@@ -1,5 +1,5 @@
 // ** React Imports
-import { createContext, useEffect, useState, ReactNode } from 'react'
+import React, { createContext, useEffect, useState, ReactNode } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -20,6 +20,7 @@ const defaultProvider: AuthValuesType = {
   setUser: () => null,
   setLoading: () => Boolean,
   login: () => Promise.resolve(),
+  loginSeller: () => Promise.resolve(),
   logout: () => Promise.resolve()
 }
 
@@ -106,6 +107,34 @@ const AuthProvider = ({ children }: Props) => {
       })
   }
 
+  const handleLoginSeller = async (params: LoginParams, errorCallback?: ErrCallbackType) => {
+    api
+      .post(authConfig.loginSellerEndpoint, params)
+      .then(async (response) => {
+        params.rememberMe
+          ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
+          : null
+
+        const returnUrl = router.query.returnUrl
+        setCookie(authConfig.cookieTokenKeyName, response.data.accessToken, {
+          maxAge: 60 * 60 * 24 * 30 * 12 * 1,
+          expires: new Date(2025, 1, 1),
+          sameSite: 'strict'
+        })
+        setUser({ ...response.data.userData })
+        params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData)) : null
+
+        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+
+        window.location.href = redirectURL as string
+
+         router.replace("/dashboard-seller")
+      })
+
+      .catch((err) => {
+        if (errorCallback) errorCallback(err)
+      })
+  }
   const handleLogout = () => {
     setUser(null)
     deleteCookie(authConfig.cookieTokenKeyName)
@@ -123,6 +152,7 @@ const AuthProvider = ({ children }: Props) => {
         setUser,
         setLoading,
         login: handleLogin,
+        loginSeller: handleLoginSeller,
         logout: handleLogout
       }}
     >

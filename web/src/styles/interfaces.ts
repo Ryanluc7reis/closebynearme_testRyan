@@ -1,4 +1,4 @@
-export type HeaderType = 'CompanyHeader' | 'DefaultHeader' | 'hidden' | 'ProductHeader'
+export type HeaderType = 'CompanyHeader' | 'DefaultHeader' | 'hidden' | 'ProductHeader' | 'ProductHeaderWithSeller'
 
 export type BGColorsType = 'bg-text' | 'bg-background' | 'bg-primary' | 'bg-secondary' | 'bg-accent'
 
