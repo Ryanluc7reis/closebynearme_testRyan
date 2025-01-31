@@ -83,7 +83,7 @@ const LoginComponent = () => {
               <Typography variant='h3' sx={{ mb: 1.5 }}>
                 {`Welcome to ${themeConfig.templateName}! 👋🏻`}
               </Typography>
-              <LoginFormComponent loginSeller={true} />
+              <LoginFormComponent loginSeller={false} />
             </Box>
           </Box>
         </Box>
