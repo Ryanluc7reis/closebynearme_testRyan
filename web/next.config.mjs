@@ -4,7 +4,9 @@ import withTM from 'next-transpile-modules'
 const nextConfig = withTM(['react-native', 'react-native-web'])({
   reactStrictMode: true,
   output: 'standalone',
-
+  compiler: {
+    styledComponents: true
+  },
   experimental: {
     turbo: {
       optimizePackageImports: ['package-name']
