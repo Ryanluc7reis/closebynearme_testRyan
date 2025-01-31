@@ -32,10 +32,10 @@ export class AuthService {
   private readonly jwtService: JwtService;
   @Inject(AdminService)
   private readonly adminService: AdminService;
-  @Inject(SellerService)
-  private readonly sellerService: SellerService;
 
   constructor(
+    @Inject(SellerService)
+    private readonly sellerService: SellerService,
     @InjectModel(Account.name)
     private readonly accountModel: PaginateModel<AccountDocument>,
     @InjectModel(Session.name)

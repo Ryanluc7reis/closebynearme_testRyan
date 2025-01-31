@@ -2,6 +2,8 @@ import { Global, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { AuthController } from './auth.controller';
+import { SellerService } from 'src/seller/seller.service';
+import { SellerResolver } from 'src/seller/seller.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Account, AccountSchema } from './entities/account.entity';
 import { SessionSchema, Session } from './entities/session.entity';
@@ -21,7 +23,7 @@ import { SessionSchema, Session } from './entities/session.entity';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthResolver],
-  exports: [AuthService],
+  providers: [AuthService, AuthResolver, SellerService, SellerResolver],
+  exports: [AuthService, SellerService],
 })
 export class AuthModule {}
