@@ -23,7 +23,7 @@
     "cookies-next": "^4.1.1",
     "dayjs": "^1.11.11",
     "graphql": "^16.8.1",
-    "next": "14.2.1",
+    "next": "^14.2.1",
     "next-transpile-modules": "^10.0.1",
     "nprogress": "^0.2.0",
     "photoswipe": "^5.4.4",
