@@ -9,6 +9,8 @@ import { ObjectId, PaginateModel } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Account, AccountDocument } from '../auth/entities/account.entity';
 import { JwtService } from '../common/modules/jwt/jwt.service';
+import { SellerService } from '../seller/seller.service';
+import { Seller } from '../seller/entities/seller.entity';
 import { AdminService } from '../admin/admin.service';
 import { Admin } from '../admin/entities/admin.entity';
 import {
@@ -30,6 +32,8 @@ export class AuthService {
   private readonly jwtService: JwtService;
   @Inject(AdminService)
   private readonly adminService: AdminService;
+  @Inject(SellerService)
+  private readonly sellerService: SellerService;
 
   constructor(
     @InjectModel(Account.name)
@@ -87,6 +91,82 @@ export class AuthService {
     return access_token;
   }
 
+  async createSessionSeller(data: Seller) {
+    let account = await this.accountModel.findOne({ userId: data._id });
+    let newAccount = false;
+    const expires_at = moment().add(1, 'day');
+
+    const session = new this.sessionModel({
+      sessionToken: randomUUID(),
+      role: data.role,
+      userId: data._id,
+      timestamp: expires_at,
+    });
+    const access_token = await this.jwtService.generateAccessToken(
+      session,
+      expires_at,
+    );
+
+    if (!account) {
+      account = new this.accountModel({
+        userId: data._id,
+        type: AccountSchemaAllowed.CLIENT,
+        provider: Provider.EMAIL,
+        access_token,
+        expires_at,
+        scope: [Scopes.ADMIN],
+        id_token: session._id,
+        session_state: SessionState.AVAILABLE,
+      });
+      newAccount = true;
+    } else {
+      await account.updateOne({
+        $set: {
+          access_token,
+          scope: [Scopes.ADMIN],
+          expires_at,
+          id_token: session._id,
+        },
+      });
+    }
+
+    if (newAccount) {
+      await account.save();
+    }
+    await session.save();
+    await this.sessionModel.deleteMany({ _id: { $ne: session._id } });
+    return access_token;
+  }
+
+  async loginSeller({ email, password }: LoginInput) {
+    const seller = await this.sellerService.findOne({ email });
+
+    if (!seller) {
+      throw new NotFoundException('No encontrado', 'Not found');
+    }
+
+    const isPasswordValid: boolean = this.jwtService.isPasswordValid(
+      password,
+      seller.password,
+    );
+
+    if (!isPasswordValid) {
+      throw new BadRequestException(
+        'Email o contraseña incorrecta',
+        'Email or Password incorrect',
+      );
+    }
+
+    const sessionToken = await this.createSessionSeller(seller);
+
+    return {
+      accessToken: sessionToken,
+      id: seller.id,
+      email: seller.email,
+      contactPersonName: seller.contactPersonName,
+    };
+  }
+
   async loginAdmin({ email, password }: LoginInput) {
     const admin = await this.adminService.findOne({ email });
 
@@ -130,6 +210,10 @@ export class AuthService {
   async adminProfile(adminId: ObjectId) {
     return await this.adminService.getProfile(adminId);
   }
+  async sellerProfile(sellerId: ObjectId) {
+    return await this.sellerService.getProfile(sellerId);
+  }
+
 
   async validate(token: string) {
     const decoded = this.jwtService.verifySessionToken(token);

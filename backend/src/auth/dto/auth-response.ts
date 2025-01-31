@@ -45,3 +45,21 @@ export class AuthResponseAdmin {
   @ArrayNotEmpty()
   permissions: PermissionsMenu[];
 }
+@ObjectType()
+export class AuthResponseSeller {
+  @Field(() => ID)
+  @IsString()
+  id: string;
+
+  @Field(() => String)
+  @IsUUID()
+  accessToken: string;
+
+  @Field(() => String)
+  @IsEmail()
+  email: string;
+
+  @Field(() => String)
+  @IsString()
+  contactPersonName: string;
+}

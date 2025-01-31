@@ -27,6 +27,19 @@ export class AuthController {
       },
     };
   }
+  @Post('/login-seller')
+  async signinSeller(@Body() data: LoginInput) {
+    const user = await this.authService.loginSeller(data);
+
+    return {
+      accessToken: user.accessToken,
+      userData: {
+        id: user.id,
+        contactPersonName: user.contactPersonName,
+        email: user.email,
+      },
+    };
+  }
 
   @Get('/me')
   @UseGuards(AuthGuard)
@@ -43,6 +56,19 @@ export class AuthController {
       },
     };
   }
+  @Get('/me-seller')
+  @UseGuards(AuthGuard)
+  async me(@CurrentAdmin() adminId: ObjectId) {
+    const user = await this.authService.adminProfile(adminId);
+    return {
+      userData: {
+        id: user.id,
+        contactPersonName: user.contactPersonName,
+        email: user.email,
+      },
+    };
+  }
+
 
   @Get('/vertical-nav/data')
   @UseGuards(AuthGuard)
