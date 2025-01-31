@@ -15,6 +15,7 @@
     "@apollo/client": "^3.10.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^3.10.0",
     "@iconify/react": "^5.0.1",
     "@mui/material": "^6.4.2",
     "@next/third-parties": "^14.2.4",
