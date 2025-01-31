@@ -58,8 +58,8 @@ export class AuthController {
   }
   @Get('/me-seller')
   @UseGuards(AuthGuard)
-  async me(@CurrentAdmin() adminId: ObjectId) {
-    const user = await this.authService.adminProfile(adminId);
+  async meSeller(@CurrentAdmin() sellerId: ObjectId) {
+    const user = await this.authService.sellerProfile(sellerId);
     return {
       userData: {
         id: user.id,
@@ -68,7 +68,6 @@ export class AuthController {
       },
     };
   }
-
 
   @Get('/vertical-nav/data')
   @UseGuards(AuthGuard)
