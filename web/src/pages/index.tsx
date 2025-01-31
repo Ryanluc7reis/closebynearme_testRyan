@@ -17,7 +17,7 @@ function Home() {
 
   return (
     <div className=''>
-      <HomePage isMobile={isMobile} type='ProductHeaderWithSeller' className='' />
+      <HomePage isMobile={isMobile} type='ProductHeader' className='' />
       <FooterSection isMobile={isMobile} />
     </div>
   )
