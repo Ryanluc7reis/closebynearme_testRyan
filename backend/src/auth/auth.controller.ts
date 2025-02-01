@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginInput } from './dto/login-input';
+import { LoginInputSeller } from './dto/login-input.seller';
 import { AuthGuard } from './auth.guard';
 import { CurrentAdmin } from './auth.decorator';
 import { ObjectId } from 'mongoose';
@@ -28,7 +29,7 @@ export class AuthController {
     };
   }
   @Post('/login-seller')
-  async signinSeller(@Body() data: LoginInput) {
+  async signinSeller(@Body() data: LoginInputSeller) {
     const user = await this.authService.loginSeller(data);
 
     return {
