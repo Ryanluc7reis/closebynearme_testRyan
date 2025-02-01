@@ -25,7 +25,8 @@ import { Session, SessionDocument } from './entities/session.entity';
 import { randomUUID } from 'crypto';
 import * as moment from 'moment';
 import { LoginInput } from './dto/login-input';
-import { LoginInputSeller } from './dto/login-input.seller';
+
+//import { LoginInputSeller } from './dto/login-input.seller';
 
 @Injectable()
 export class AuthService {
@@ -139,34 +140,34 @@ export class AuthService {
     return access_token;
   }
 
-  async loginSeller({ email, password }: LoginInputSeller) {
-    const seller = await this.sellerService.findOne({ email });
+  // async loginSeller({ email, password }: LoginInputSeller) {
+  //   const seller = await this.sellerService.findOne({ email });
 
-    if (!seller) {
-      throw new NotFoundException('No encontrado', 'Not found');
-    }
+  //   if (!seller) {
+  //     throw new NotFoundException('No encontrado', 'Not found');
+  //   }
 
-    const isPasswordValid: boolean = this.jwtService.isPasswordValid(
-      password,
-      seller.password,
-    );
+  //   const isPasswordValid: boolean = this.jwtService.isPasswordValid(
+  //     password,
+  //     seller.password,
+  //   );
 
-    if (!isPasswordValid) {
-      throw new BadRequestException(
-        'Email o contraseña incorrecta',
-        'Email or Password incorrect',
-      );
-    }
+  //   if (!isPasswordValid) {
+  //     throw new BadRequestException(
+  //       'Email o contraseña incorrecta',
+  //       'Email or Password incorrect',
+  //     );
+  //   }
 
-    const sessionToken = await this.createSessionSeller(seller);
+  //   const sessionToken = await this.createSessionSeller(seller);
 
-    return {
-      accessToken: sessionToken,
-      id: seller.id,
-      email: seller.email,
-      contactPersonName: seller.contactPersonName,
-    };
-  }
+  //   return {
+  //     accessToken: sessionToken,
+  //     id: seller.id,
+  //     email: seller.email,
+  //     contactPersonName: seller.contactPersonName,
+  //   };
+  // }
 
   async loginAdmin({ email, password }: LoginInput) {
     const admin = await this.adminService.findOne({ email });
@@ -211,9 +212,9 @@ export class AuthService {
   async adminProfile(adminId: ObjectId) {
     return await this.adminService.getProfile(adminId);
   }
-  async sellerProfile(sellerId: ObjectId) {
-    return await this.sellerService.getProfile(sellerId);
-  }
+  // async sellerProfile(sellerId: ObjectId) {
+  //   return await this.sellerService.getProfile(sellerId);
+  // }
 
   async validate(token: string) {
     const decoded = this.jwtService.verifySessionToken(token);

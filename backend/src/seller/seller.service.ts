@@ -1,12 +1,18 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, FilterQuery, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateSellerInput } from './dto/create-seller.input';
 import { UpdateSellerInput } from './dto/update-seller.input';
 import { Seller, SellerDocument } from './entities/seller.entity';
 import { JwtService } from '../common/modules/jwt/jwt.service';
 import { CacheService } from '../common/modules/redis/redis.service';
+import { LoginInputSeller } from '../auth/dto/login-input.seller';
 
 @Injectable()
 export class SellerService {
@@ -32,28 +38,48 @@ export class SellerService {
   async findAll(): Promise<Seller[]> {
     return this.sellerModel.find();
   }
-  async getProfile(_id: ObjectId) {
-    const name_space = `PROFILE:SELLER:${_id}`;
+  // async getProfile(_id: ObjectId) {
+  //   const name_space = `PROFILE:SELLER:${_id}`;
 
-    let seller = await this.cacheService.get(name_space);
+  //   let seller = await this.cacheService.get(name_space);
+  //   if (!seller) {
+  //     seller = await this.findOne({ _id });
+  //     await this.cacheService.set(name_space, seller, 60);
+  //   }
+
+  //   return seller;
+  // }
+
+  async loginSeller({ email, password }: LoginInputSeller) {
+    const seller = await this.sellerModel.findOne({ email });
+
     if (!seller) {
-      seller = await this.findOne({ _id });
-      await this.cacheService.set(name_space, seller, 60);
-    }
-
-    return seller;
-  }
-
-  async findOne(option?: FilterQuery<SellerDocument>, skipError = false) {
-    const model = await this.sellerModel.findOne({
-      ...option,
-    });
-
-    if (!model && !skipError) {
       throw new NotFoundException('No encontrado', 'Not found');
     }
-    return model;
+
+    const isPasswordValid: boolean = this.jwtService.isPasswordValid(
+      password,
+      seller.password,
+    );
+
+    if (!isPasswordValid) {
+      throw new BadRequestException(
+        'Email o contraseña incorrecta',
+        'Email or Password incorrect',
+      );
+    }
+    return seller;
   }
+  // async findOne(option?: FilterQuery<SellerDocument>, skipError = false) {
+  //   const model = await this.sellerModel.findOne({
+  //     ...option,
+  //   });
+
+  //   if (!model && !skipError) {
+  //     throw new NotFoundException('No encontrado', 'Not found');
+  //   }
+  //   return model;
+  // }
 
   async updateSeller({ _id }: UpdateSellerInput) {
     const sellerExists = await this.sellerModel.findById(_id);

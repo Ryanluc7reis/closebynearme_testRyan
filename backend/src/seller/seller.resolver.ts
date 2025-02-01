@@ -19,7 +19,7 @@ export class SellerResolver {
   }
   @Mutation(() => String)
   async loginSeller(@Args('input') input: LoginInputSeller) {
-    return this.sellerService.findOne(input);
+    return this.sellerService.loginSeller(input);
   }
 
   @Mutation(() => String)
