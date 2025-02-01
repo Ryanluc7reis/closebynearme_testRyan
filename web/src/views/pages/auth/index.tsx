@@ -1,4 +1,3 @@
-
 import React from 'react'
 import Button from '@mui/material/Button'
 import { useForm, Controller } from 'react-hook-form'
@@ -52,8 +51,6 @@ export interface LoginValues {
 }
 
 const LoginComponent = () => {
-
-
   const auth = useAuth()
   const {
     control,
@@ -77,7 +74,7 @@ const LoginComponent = () => {
   }
 
   return (
-    <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+    <form noValidate autoComplete='off' onSubmit={() => handleSubmit(onSubmit)}>
       <NavbarHeader isMobile={false} type='ProductHeader' />
       <Container>
         <FormBox>
