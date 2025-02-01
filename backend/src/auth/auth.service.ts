@@ -25,6 +25,7 @@ import { Session, SessionDocument } from './entities/session.entity';
 import { randomUUID } from 'crypto';
 import * as moment from 'moment';
 import { LoginInput } from './dto/login-input';
+import { LoginInputSeller } from './dto/login-input.seller';
 
 @Injectable()
 export class AuthService {
@@ -138,7 +139,7 @@ export class AuthService {
     return access_token;
   }
 
-  async loginSeller({ email, password }: LoginInput) {
+  async loginSeller({ email, password }: LoginInputSeller) {
     const seller = await this.sellerService.findOne({ email });
 
     if (!seller) {

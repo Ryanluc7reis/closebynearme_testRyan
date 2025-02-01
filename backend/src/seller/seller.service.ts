@@ -33,7 +33,7 @@ export class SellerService {
     return this.sellerModel.find();
   }
   async getProfile(_id: ObjectId) {
-    const name_space = `PROFILE:ADMIN:${_id}`;
+    const name_space = `PROFILE:SELLER:${_id}`;
 
     let seller = await this.cacheService.get(name_space);
     if (!seller) {

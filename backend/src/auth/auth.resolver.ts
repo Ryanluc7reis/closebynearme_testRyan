@@ -5,6 +5,7 @@ import {
   AuthResponseSeller,
 } from '../auth/dto/auth-response';
 import { LoginInput } from '../auth/dto/login-input';
+import { LoginInputSeller } from './dto/login-input.seller';
 import { AuthService } from './auth.service';
 
 @Resolver()
@@ -17,7 +18,7 @@ export class AuthResolver {
     return this.svc.loginAdmin(input);
   }
   @Mutation(() => AuthResponseSeller)
-  async loginSeller(@Args('input') input: LoginInput) {
+  async loginSeller(@Args('input') input: LoginInputSeller) {
     return this.svc.loginSeller(input);
   }
 }
