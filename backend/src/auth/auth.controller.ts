@@ -40,7 +40,7 @@ export class AuthController {
         email: user.email,
         isApproved: user.isApproved,
       },
-      rememberMe: data.rememberMe
+      rememberMe: data.rememberMe,
     };
   }
 
@@ -60,7 +60,7 @@ export class AuthController {
     };
   }
   @Get('/me-seller')
-  async meSeller(@CurrentAdmin() sellerId: ObjectId) {
+  async meSeller(@Body() sellerId: ObjectId) {
     const user = await this.authService.sellerProfile(sellerId);
     return {
       userData: {
