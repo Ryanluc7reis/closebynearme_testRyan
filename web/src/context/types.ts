@@ -10,10 +10,19 @@ export type LoginParams = {
 
 // export type UserDataType = ProfileQuery['me']
 
+interface Seller {
+  email: string
+  contactPersonName: string
+  id: string
+  isApproved: boolean
+}
+
+export type AuthUser = Seller | null
+
 export type AuthValuesType = {
   loading: boolean
   logout: () => void
-  user: null
+  user: AuthUser
 
   //   user: UserDataType | null
   setLoading: (value: boolean) => void

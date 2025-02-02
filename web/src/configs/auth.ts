@@ -1,5 +1,5 @@
 const authConfig = {
-  meEndpoint: '/auth/me',
+  meEndpoint: '/auth/me-seller',
   loginEndpoint: '/auth/login',
   loginSellerEndpoint: '/auth/login-seller',
 

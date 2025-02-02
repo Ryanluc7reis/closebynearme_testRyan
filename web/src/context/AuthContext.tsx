@@ -5,13 +5,13 @@ import React, { createContext, useEffect, useState, ReactNode } from 'react'
 import { useRouter } from 'next/router'
 
 // ** Config
-import authConfig from 'src/configs/auth'
+import authConfig from '../configs/auth'
 import { deleteCookie, setCookie } from 'cookies-next'
 
 // ** Types
-import { AuthValuesType, LoginParams, ErrCallbackType } from './types'
-import client from 'src/apollo-client'
-import api from 'src/graphql/api'
+import { AuthValuesType, LoginParams, ErrCallbackType, AuthUser } from './types'
+import client from '../apollo-client'
+import api from '../graphql/api'
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -32,7 +32,7 @@ type Props = {
 
 const AuthProvider = ({ children }: Props) => {
   // ** States
-  const [user, setUser] = useState<null>(defaultProvider.user)
+  const [user, setUser] = useState<AuthUser>(defaultProvider.user)
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading)
 
   // ** Hooks
@@ -42,8 +42,7 @@ const AuthProvider = ({ children }: Props) => {
     const initAuth = async (): Promise<void> => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
       if (storedToken) {
-        setLoading(true)
-
+        setLoading(false)
         await api
           .get(authConfig.meEndpoint, {
             headers: {
@@ -65,12 +64,11 @@ const AuthProvider = ({ children }: Props) => {
             localStorage.removeItem('accessToken')
             setUser(null)
             setLoading(false)
-            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
-              router.replace('/auth/login')
-            }
+
+            //   if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
+            //      router.replace('/auth/login')
+            //    }
           })
-      } else {
-        setLoading(false)
       }
     }
 
@@ -115,7 +113,6 @@ const AuthProvider = ({ children }: Props) => {
           ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
           : null
 
-        const returnUrl = router.query.returnUrl
         setCookie(authConfig.cookieTokenKeyName, response.data.accessToken, {
           maxAge: 60 * 60 * 24 * 30 * 12 * 1,
           expires: new Date(2025, 1, 1),
@@ -124,13 +121,8 @@ const AuthProvider = ({ children }: Props) => {
         setUser({ ...response.data.userData })
         params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData)) : null
 
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-
-        window.location.href = redirectURL as string
-
-         router.replace("/dashboard-seller")
+        router.replace('/dashboard-seller')
       })
-
       .catch((err) => {
         if (errorCallback) errorCallback(err)
       })
@@ -141,7 +133,10 @@ const AuthProvider = ({ children }: Props) => {
     client().resetStore()
     window.localStorage.removeItem('userData')
     window.localStorage.removeItem(authConfig.storageTokenKeyName)
-    router.reload()
+    setLoading(false)
+    setTimeout(() => {
+      window.location.reload()
+    }, 100)
   }
 
   return (
@@ -162,3 +157,4 @@ const AuthProvider = ({ children }: Props) => {
 }
 
 export { AuthContext, AuthProvider }
+export const AuthConsumer = AuthContext.Consumer

@@ -1,25 +1,22 @@
 import React from 'react'
 import authConfig from '@configs/auth'
 import { getCookie } from 'cookies-next'
-import client from '@apollo-client'
 
-import  LoginComponent  from '@views/auth'
+import  LoginComponent  from '@views/auth/Login'
 
-function LoginPage() {
+
+const LoginPage = () => {
   return <LoginComponent />
 }
 
-LoginPage.guestGuard = true
 
-export const getServerSideProps = async ({ req, res, query }) => {
+
+export const getServerSideProps = async ({ req, res }) => {
   const token = getCookie(authConfig.cookieTokenKeyName, { req, res })
-
-  await client(token)
 
   return {
     props: {
-      token: token ?? '',
-      isMobile: query.viewport === 'mobile'
+      token: token ?? ''
     }
   }
 }

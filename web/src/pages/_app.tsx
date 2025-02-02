@@ -19,6 +19,8 @@ import MediaQueryProvider from 'src/hooks/useMediaQuery'
 import { GoogleTagManager } from '@next/third-parties/google'
 import { gtmPageView } from 'src/utils/gtm'
 import 'src/iconify-bundle/icons-bundle-react'
+import { AuthConsumer, AuthProvider } from 'src/context/AuthContext'
+
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -89,14 +91,19 @@ export default function App(props: ExtendedAppProps) {
         data={pageProps.data}
       />
       <ApolloProvider client={apolloClient}>
-        <MediaQueryProvider initialValues={{ isMobile: pageProps.isMobile || false }}>
-          <Guard authGuard={authGuard} guestGuard={guestGuard}>
-            {getLayout(<Component {...pageProps} />)}
-          </Guard>
-          <GoogleTagManager gtmId={'GTM-PPH36QQT'} />
-
-          <Toaster position={themeConfig.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-        </MediaQueryProvider>
+        <AuthProvider>
+          <AuthConsumer>
+            {() => (
+              <MediaQueryProvider initialValues={{ isMobile: pageProps.isMobile || false }}>
+                <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                  {getLayout(<Component {...pageProps} />)}
+                </Guard>
+                <GoogleTagManager gtmId={'GTM-PPH36QQT'} />
+                <Toaster position={themeConfig.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+              </MediaQueryProvider>
+            )}
+          </AuthConsumer>
+        </AuthProvider>
       </ApolloProvider>
     </>
   )

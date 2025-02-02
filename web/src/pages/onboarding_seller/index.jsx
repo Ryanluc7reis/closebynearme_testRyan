@@ -23,7 +23,7 @@ return (
     )
 }
 
-OnBoardingSellerPage.guestGuard = true
+OnBoardingSellerPage.hideFooter = true
 
 export const getServerSideProps = async ({ req, res, query }) => {
   const token = getCookie(authConfig.cookieTokenKeyName, { req, res })

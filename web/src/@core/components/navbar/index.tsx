@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '../button'
 import Image from 'next/image'
 import Link from 'next/link'
+import styled from 'styled-components'
 import { DefaultStylesBase, HeaderType } from '@styles/interfaces'
-
-//import LoginFormComponent from '../../../components/LoginFormComponent'
+import { AuthContext } from '../../../context/AuthContext'
 
 interface Props {
   type?: HeaderType
@@ -37,11 +37,16 @@ const HeaderStyles = (
     }
   }
 }
-
+const StyledFlexButtonSeller = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin: 7px 0;
+` 
 function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
   const styles = HeaderStyles(isMobile)[type]
-
-  //const [modalLogin, setModalLogin] = useState(false)
+  const { user, logout } = useContext(AuthContext)
 
   return (
     <nav className='container mx-auto px-5 sm:px-0'>
@@ -87,12 +92,40 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
             <div>phone - (424) 216-6633</div>
             <a href='mailto:hello@closebynearme.com'>email - hello@closebynearme.com</a>
             <div className='flex items-center gap=[6]'>
-              <h3>Are you already a seller? </h3>
-              <Link href='/auth/login/'>
-                <button className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px] ml-[5px]'>
-                  Sign in as seller
-                </button>
-              </Link>
+              {user && user.isApproved === true && (
+                <StyledFlexButtonSeller>
+                  <h3>Hi {user.contactPersonName}, </h3>
+                  <Link href='/dashboard-seller'>
+                    <button className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px] ml-[5px]'>
+                      Dashboard Seller
+                    </button>
+                  </Link>
+               
+                    <button
+                      onClick={logout}
+                      className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px] ml-[5px]'
+                    >
+                      Logout
+                    </button>
+              
+                </StyledFlexButtonSeller>
+              )}
+               {user && user.isApproved === false && (
+                <StyledFlexButtonSeller>
+                <h3>Hi {user.contactPersonName},</h3>
+                  <h2 style={{color: 'red', fontWeight: '400'}}>your profile is under review..</h2>
+                </StyledFlexButtonSeller>
+              )}
+               {!user  && (
+                <StyledFlexButtonSeller>
+                  <h3>Are you already a seller? </h3>
+                  <Link href='/auth/login/'>
+                    <button className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px] ml-[5px]'>
+                      Sign in as seller
+                    </button>
+                  </Link>
+                </StyledFlexButtonSeller>
+              )}
             </div>
           </div>
         )}
