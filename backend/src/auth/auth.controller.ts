@@ -40,6 +40,7 @@ export class AuthController {
         email: user.email,
         isApproved: user.isApproved,
       },
+      rememberMe: data.rememberMe
     };
   }
 
