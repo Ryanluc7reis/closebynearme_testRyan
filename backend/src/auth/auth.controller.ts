@@ -38,6 +38,7 @@ export class AuthController {
         id: user.id,
         contactPersonName: user.contactPersonName,
         email: user.email,
+        isApproved: user.isApproved,
       },
     };
   }
@@ -66,6 +67,7 @@ export class AuthController {
         id: user.id,
         contactPersonName: user.contactPersonName,
         email: user.email,
+        isApproved: user.isApproved,
       },
     };
   }
