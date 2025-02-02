@@ -23,7 +23,7 @@ function Home() {
   )
 }
 
-Home.guestGuard = true
+
 Home.headerType = 'ProductHeader' as HeaderType
 Home.pageTitle = 'Close By Near Me'
 Home.hideFooter = true

@@ -1,10 +1,5 @@
-// ** React Imports
-import { ReactNode, ReactElement, useEffect } from 'react'
-
-// ** Next Import
+import { ReactNode, ReactElement, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-
-// ** Hooks Import
 import { useAuth } from 'src/hooks/useAuth'
 
 interface AuthGuardProps {
@@ -12,35 +7,24 @@ interface AuthGuardProps {
   fallback: ReactElement | null
 }
 
-const AuthGuard = (props: AuthGuardProps) => {
-  const { children, fallback } = props
+const AuthGuard = ({ children, fallback }: AuthGuardProps) => {
   const auth = useAuth()
   const router = useRouter()
+  const [checked, setChecked] = useState(false)
 
-  useEffect(
-    () => {
-      if (!router.isReady) {
-        return
-      }
+  useEffect(() => {
+    if (!router.isReady) return
 
-      if (auth.user === null && !window.localStorage.getItem('userData')) {
-        if (router.asPath !== '/') {
-          router.replace({
-            pathname: '/auth/login',
-            query: { returnUrl: router.asPath }
-          })
-        } else {
-          router.replace('/auth/login')
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [router.route]
-  )
+    const storedUser = window.localStorage.getItem('userData')
 
-  if (auth.loading || auth.user === null) {
-    return fallback
-  }
+    if (auth.user === null && !storedUser) {
+      setChecked(true)
+    } else {
+      setChecked(true)
+    }
+  }, [router.isReady, auth.user])
+
+  if (!checked || auth.loading) return fallback
 
   return <>{children}</>
 }

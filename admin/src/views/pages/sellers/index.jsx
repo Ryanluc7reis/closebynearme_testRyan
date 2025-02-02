@@ -204,7 +204,9 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   buttonContainer: {
-    flexDirection: 'column'
+    width:'100%',
+    flexDirection: 'column',
+    gap: 7
   },
   userContainer: {
     width: '75%',
@@ -311,6 +313,11 @@ const styles = StyleSheet.create({
     userContainer: {
       flexDirection: 'column',
       width: '90%',
+      alignItems: 'center',
+      flexWrap: 'no-wrap'
+      
+    },
+    buttonContainer: {
       alignItems: 'center'
     }
   }

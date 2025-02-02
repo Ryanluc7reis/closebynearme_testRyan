@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast'
 import { useApollo } from '../apollo-client'
 import { ApolloProvider } from '@apollo/client'
 import Spinner from '@core/components/spinner'
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import AuthGuard from '@core/components/auth/AuthGuard'
 import GuestGuard from '@core/components/auth/GuestGuard'
 import UserLayout from '@layouts/UserLayout'
@@ -19,8 +19,7 @@ import MediaQueryProvider from 'src/hooks/useMediaQuery'
 import { GoogleTagManager } from '@next/third-parties/google'
 import { gtmPageView } from 'src/utils/gtm'
 import 'src/iconify-bundle/icons-bundle-react'
-import { AuthConsumer, AuthProvider } from 'src/context/AuthContext'
-
+import { AuthProvider } from 'src/context/AuthContext'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -33,15 +32,9 @@ type GuardProps = {
 }
 
 // ** Pace Loader
-Router.events.on('routeChangeStart', () => {
-  NProgress.start()
-})
-Router.events.on('routeChangeError', () => {
-  NProgress.done()
-})
-Router.events.on('routeChangeComplete', () => {
-  NProgress.done()
-})
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeError', () => NProgress.done())
+Router.events.on('routeChangeComplete', () => NProgress.done())
 
 const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
   if (guestGuard) {
@@ -57,7 +50,27 @@ export default function App(props: ExtendedAppProps) {
   const { Component, pageProps } = props
   const apolloClient = useApollo(pageProps.initialApolloState, pageProps.token)
 
-  // Variables
+  // Verifica se o cliente já montou (Solução 3)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  const isClient = typeof window !== 'undefined'
+
+  useEffect(() => {
+    if (isClient) {
+      const props = {
+        page_title: pageProps.pageTitle || Component.pageTitle || null
+      }
+      gtmPageView(props)
+    }
+  }, [Component.pageTitle, pageProps, isClient])
+
+  // Evita renderizar até que o cliente esteja montado
+  if (!mounted) return <Spinner />
+
+  // Verifica se está no cliente para evitar SSR acessando window/document (Solução 4)
+
   const contentHeightFixed = Component.contentHeightFixed ?? false
   const getLayout =
     Component.getLayout ??
@@ -72,16 +85,8 @@ export default function App(props: ExtendedAppProps) {
     ))
 
   const authGuard = Component.authGuard ?? true
-
   const guestGuard = Component.guestGuard ?? false
   const title = `${pageProps.pageTitle || Component.pageTitle || themeConfig.templateName}`
-
-  useEffect(() => {
-    const props = {
-      page_title: pageProps.pageTitle || Component.pageTitle || null
-    }
-    gtmPageView(props)
-  }, [Component.pageTitle, pageProps])
 
   return (
     <>
@@ -92,17 +97,13 @@ export default function App(props: ExtendedAppProps) {
       />
       <ApolloProvider client={apolloClient}>
         <AuthProvider>
-          <AuthConsumer>
-            {() => (
-              <MediaQueryProvider initialValues={{ isMobile: pageProps.isMobile || false }}>
-                <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                  {getLayout(<Component {...pageProps} />)}
-                </Guard>
-                <GoogleTagManager gtmId={'GTM-PPH36QQT'} />
-                <Toaster position={themeConfig.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-              </MediaQueryProvider>
-            )}
-          </AuthConsumer>
+          <MediaQueryProvider initialValues={{ isMobile: pageProps.isMobile || false }}>
+            <Guard authGuard={authGuard} guestGuard={guestGuard}>
+              {getLayout(<Component {...pageProps} />)}
+            </Guard>
+            <GoogleTagManager gtmId={'GTM-PPH36QQT'} />
+            <Toaster position={themeConfig.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+          </MediaQueryProvider>
         </AuthProvider>
       </ApolloProvider>
     </>

@@ -11,6 +11,7 @@ import { deleteCookie, setCookie } from 'cookies-next'
 // ** Types
 import { AuthValuesType, LoginParams, ErrCallbackType, AuthUser } from './types'
 import client from '../apollo-client'
+
 import api from '../graphql/api'
 
 // ** Defaults
@@ -52,12 +53,14 @@ const AuthProvider = ({ children }: Props) => {
           .then(async (response) => {
             setLoading(false)
             setUser({ ...response.data.userData })
+
             setCookie(authConfig.cookieTokenKeyName, storedToken, {
               maxAge: 60 * 60 * 24 * 30 * 12 * 1,
               expires: new Date(2025, 1, 1),
               sameSite: 'strict'
             })
           })
+
           .catch(() => {
             localStorage.removeItem('userData')
             localStorage.removeItem('refreshToken')
@@ -65,9 +68,9 @@ const AuthProvider = ({ children }: Props) => {
             setUser(null)
             setLoading(false)
 
-            //   if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
-            //      router.replace('/auth/login')
-            //    }
+            // if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
+            //   router.replace('/')
+            // }
           })
       }
     }
@@ -127,16 +130,21 @@ const AuthProvider = ({ children }: Props) => {
         if (errorCallback) errorCallback(err)
       })
   }
-  const handleLogout = () => {
+
+  const handleLogout = async () => {
     setUser(null)
     deleteCookie(authConfig.cookieTokenKeyName)
-    client().resetStore()
     window.localStorage.removeItem('userData')
     window.localStorage.removeItem(authConfig.storageTokenKeyName)
     setLoading(false)
-    setTimeout(() => {
-      window.location.reload()
-    }, 100)
+
+    try {
+      const apollo = client()
+      await apollo.clearStore()
+    } catch (error) {
+      console.error('Erro to clean the cache Apollo:', error)
+    }
+    router.replace('/auth/login')
   }
 
   return (

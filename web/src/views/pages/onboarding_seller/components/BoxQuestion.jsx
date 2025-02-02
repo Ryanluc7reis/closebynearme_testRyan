@@ -25,6 +25,9 @@ const TitleContainer = styled.div`
   margin-bottom: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   gap: 7px;
+  @media(max-width: 768px){
+    width: 87%;
+   }
 `
 
 const TitleText = styled.h2`
@@ -51,6 +54,9 @@ const QuestionBox = styled.div`
   margin-bottom: 20px;
   width: 50%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   @media(max-width: 768px){
+    width: 87%;
+   }
 `
 
 const QuestionText = styled.p`

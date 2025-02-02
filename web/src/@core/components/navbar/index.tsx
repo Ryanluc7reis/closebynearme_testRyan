@@ -46,7 +46,7 @@ const StyledFlexButtonSeller = styled.div`
 ` 
 function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
   const styles = HeaderStyles(isMobile)[type]
-  const { user, logout } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   return (
     <nav className='container mx-auto px-5 sm:px-0'>
@@ -100,20 +100,13 @@ function NavbarHeader({ type = 'DefaultHeader', isMobile }: Props) {
                       Dashboard Seller
                     </button>
                   </Link>
-               
-                    <button
-                      onClick={logout}
-                      className='flex flex-col items-start justify-center font-inter font-bold text-[20px] bg-[#0BC9B4] text-white px-4 py-2 rounded-lg mb-[10px] ml-[5px]'
-                    >
-                      Logout
-                    </button>
-              
                 </StyledFlexButtonSeller>
               )}
                {user && user.isApproved === false && (
                 <StyledFlexButtonSeller>
                 <h3>Hi {user.contactPersonName},</h3>
                   <h2 style={{color: 'red', fontWeight: '400'}}>your profile is under review..</h2>
+                
                 </StyledFlexButtonSeller>
               )}
                {!user  && (
