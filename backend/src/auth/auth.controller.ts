@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { LoginInput } from './dto/login-input';
 import { LoginInputSeller } from './dto/login-input.seller';
 import { AuthGuard } from './auth.guard';
-import { CurrentAdmin } from './auth.decorator';
+import { CurrentAdmin, CurrentClient } from './auth.decorator';
 import { ObjectId } from 'mongoose';
 
 @Controller('auth')
@@ -60,7 +60,8 @@ export class AuthController {
     };
   }
   @Get('/me-seller')
-  async meSeller(@Body() sellerId: ObjectId) {
+  @UseGuards(AuthGuard)
+  async meSeller(@CurrentClient() sellerId: ObjectId) {
     const user = await this.authService.sellerProfile(sellerId);
     return {
       userData: {
