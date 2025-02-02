@@ -12,7 +12,7 @@ export class LoginInputSeller {
   @IsNotEmpty()
   password: string;
 
-  @Field(() => Bollean)
+  @Field(() => Boolean)
   @IsBoolean()
   rememberMe: boolean;
 }
