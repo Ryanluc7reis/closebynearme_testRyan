@@ -148,12 +148,15 @@ export const ListSellersComponent = () => {
               <Text style={styles.userTitleData}> Approved</Text>
               <Text style={styles.userTextData}>{seller.isApproved === true ? 'Yes' : 'No'}</Text>
             </View>
+            <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={() => handleApprovedSeller(seller._id)} style={styles.approvedButton}>
               <Text style={styles.approvedTextButton}>Approved</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={openDeleteModal} style={styles.deleteButton}>
               <Text style={styles.deleteTextButton}>Delete</Text>
             </TouchableOpacity>
+            </View>
+           
           </TouchableOpacity>
 
           <Modal visible={isModalDeleteVisible} animationType='fade' transparent onRequestClose={closeDeleteModal}>
@@ -190,7 +193,8 @@ export const ListSellersComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
+    alignItems: 'center'
   },
   title: {
     fontSize: 19,
@@ -199,7 +203,11 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     textAlign: 'center'
   },
+  buttonContainer: {
+    flexDirection: 'column'
+  },
   userContainer: {
+    width: '75%',
     padding: 15,
     marginBottom: 15,
     borderWidth: 1,
@@ -207,7 +215,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 10
+    gap: 10,
+    flexWrap: 'wrap'
   },
   userTitleData: {
     fontSize: 18,
@@ -225,6 +234,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     padding: 20,
+    width: '50%',
     backgroundColor: 'white'
   },
   closeButton: {
@@ -295,5 +305,13 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 16,
     color: 'gray'
+  },
+
+  '@media (max-width: 768px)': {
+    userContainer: {
+      flexDirection: 'column',
+      width: '90%',
+      alignItems: 'center'
+    }
   }
-})
+});
