@@ -165,6 +165,7 @@ export class AuthService {
       id: seller.id,
       email: seller.email,
       contactPersonName: seller.contactPersonName,
+      isApproved: seller.isApproved,
     };
   }
 
