@@ -7,6 +7,7 @@ export const ListSellersComponent = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false)
   const [sellersData, setSellersData] = useState([])
+  const [sellerToDelete, setSellerToDelete] = useState(null)
   const URI = process.env.NEXT_PUBLIC_GRAPHQL_URL
 
   const getSellers = async () => {
@@ -39,7 +40,8 @@ export const ListSellersComponent = () => {
     getSellers()
   }, [])
 
-  const handleDeleteSeller = async (_id) => {
+  const handleDeleteSeller = async () => {
+    if (!sellerToDelete) return
     const query = {
       query: `
       mutation DeleteSeller($input: UpdateSellerInput!) {
@@ -47,9 +49,10 @@ export const ListSellersComponent = () => {
         }
     `,
       variables: {
-        input: { _id }
+        input: { _id: sellerToDelete._id }
       }
     }
+
     try {
       const response = await axios.post(`${URI}`, query, {
         headers: {
@@ -57,9 +60,9 @@ export const ListSellersComponent = () => {
         }
       })
       if (response.status === 200 && response.data.data.deleteSeller === 'Seller deleted successfully') {
-        alert('Seller deleted successfully')
         getSellers()
         setIsModalDeleteVisible(false)
+        setSellerToDelete(null)
       }
     } catch (error) {
       console.error('Error to delete seller:', error)
@@ -91,7 +94,8 @@ export const ListSellersComponent = () => {
       console.error('Error to update seller:', error)
     }
   }
-  const openDeleteModal = () => {
+  const openDeleteModal = (seller) => {
+    setSellerToDelete(seller)
     setIsModalDeleteVisible(true)
   }
   const closeDeleteModal = () => {
@@ -149,14 +153,18 @@ export const ListSellersComponent = () => {
               <Text style={styles.userTextData}>{seller.isApproved === true ? 'Yes' : 'No'}</Text>
             </View>
             <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={() => handleApprovedSeller(seller._id)} style={styles.approvedButton}>
-              <Text style={styles.approvedTextButton}>Approved</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openDeleteModal} style={styles.deleteButton}>
-              <Text style={styles.deleteTextButton}>Delete</Text>
-            </TouchableOpacity>
+              {seller.isApproved === true ? (
+                ''
+              ) : (
+                <TouchableOpacity onPress={() => handleApprovedSeller(seller._id)} style={styles.approvedButton}>
+                  <Text style={styles.approvedTextButton}>Approved</Text>
+                </TouchableOpacity>
+              )}
+
+              <TouchableOpacity onPress={() => openDeleteModal(seller)} style={styles.deleteButton}>
+                <Text style={styles.deleteTextButton}>Delete</Text>
+              </TouchableOpacity>
             </View>
-           
           </TouchableOpacity>
 
           <Modal visible={isModalDeleteVisible} animationType='fade' transparent onRequestClose={closeDeleteModal}>
@@ -164,7 +172,7 @@ export const ListSellersComponent = () => {
               <View style={styles.modalDeleteContainer}>
                 <Text style={styles.modalText}>Are you sure you want to delete this seller?</Text>
 
-                <TouchableOpacity onPress={() => handleDeleteSeller(seller._id)} style={styles.deleteButton}>
+                <TouchableOpacity onPress={handleDeleteSeller} style={styles.deleteButton}>
                   <Text style={styles.deleteText}>Delete</Text>
                 </TouchableOpacity>
 
@@ -204,7 +212,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   buttonContainer: {
-    width:'100%',
+    width: '100%',
     flexDirection: 'column',
     gap: 7
   },
@@ -315,10 +323,9 @@ const styles = StyleSheet.create({
       width: '90%',
       alignItems: 'center',
       flexWrap: 'no-wrap'
-      
     },
     buttonContainer: {
       alignItems: 'center'
     }
   }
-});
+})
