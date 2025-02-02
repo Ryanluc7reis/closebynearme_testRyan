@@ -60,7 +60,6 @@ export class AuthController {
     };
   }
   @Get('/me-seller')
-  @UseGuards(AuthGuard)
   async meSeller(@CurrentAdmin() sellerId: ObjectId) {
     const user = await this.authService.sellerProfile(sellerId);
     return {
